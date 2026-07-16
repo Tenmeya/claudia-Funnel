@@ -1,0 +1,51 @@
+---
+interface Props {
+  price?: string;
+  originalPrice?: string;
+  savingsLabel?: string;
+  align?: 'center' | 'start';
+}
+
+const {
+  price = '٩٩$',
+  originalPrice = '١٤٩$',
+  savingsLabel = '(وفّر ٣٠٪)',
+  align = 'center',
+} = Astro.props;
+---
+
+<div class:list={['price-tag', align]}>
+  <span class="price-current">{price}</span>
+  <span class="price-original">{originalPrice}</span>
+  <span class="price-savings">{savingsLabel}</span>
+</div>
+
+<style>
+  .price-tag {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .price-tag.center {
+    justify-content: center;
+  }
+  .price-current {
+    font-size: 1.75rem;
+    font-weight: 800;
+    background: var(--brand-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .price-original {
+    font-size: 1.1rem;
+    color: var(--text-faint);
+    text-decoration: line-through;
+  }
+  .price-savings {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+</style>

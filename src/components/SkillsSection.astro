@@ -1,0 +1,66 @@
+---
+import PriceTag from './PriceTag.astro';
+import CTAButton from './CTAButton.astro';
+
+interface Props {
+  checkoutUrl: string;
+}
+const { checkoutUrl } = Astro.props;
+
+const items = [
+  'تبسيط الأرقام المعقدة في مدير الإعلانات وتحليل حملاتك.',
+  'اكتشاف أسباب هدر ميزانيتك ومشاركة إستراتيجية واضحة.',
+  'تحليل كل صفحة في موقعك الإلكتروني مع نصائح قوية.',
+  'تحليل إعلانات المنافسين وكتابة إعلانات تخليك تتميّز وتفوز.',
+  'تجهيز تقارير تسويقية يومية توصلك بالتليفون.',
+  'ومليون شي ثاني راح تتعلّمها بالدورة.',
+];
+---
+
+<section class="section skills-section">
+  <div class="container" data-reveal>
+    <h2 class="section-title">بعض مهارات كلوديا…</h2>
+    <ul class="check-list">
+      {items.map((item) => (
+        <li>
+          <span class="check-icon" aria-hidden="true">✓</span>
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+    <div class="cta-row">
+      <PriceTag />
+      <CTAButton href={checkoutUrl} size="lg" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .skills-section .container {
+    max-width: 640px;
+  }
+  .check-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+  .check-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+  .check-icon {
+    flex-shrink: 0;
+    color: var(--teal);
+    font-weight: 800;
+  }
+  .cta-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+  }
+</style>

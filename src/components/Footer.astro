@@ -1,0 +1,39 @@
+---
+interface Props {
+  checkoutUrl: string;
+}
+const { checkoutUrl } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <p>دورة كلوديا — عيد المجيبل</p>
+    <nav>
+      <a href={checkoutUrl} target="_blank" rel="noopener">التسجيل في الدورة</a>
+    </nav>
+    <p class="copyright">جميع الحقوق محفوظة</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-block: var(--space-lg);
+    padding-block-end: calc(var(--space-lg) + 4rem);
+    border-top: 1px solid var(--border-subtle);
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+  .site-footer nav {
+    margin-block: var(--space-sm);
+  }
+  .site-footer a {
+    color: var(--teal);
+    font-weight: 600;
+  }
+  .copyright {
+    font-size: 0.8rem;
+    color: var(--text-faint);
+  }
+</style>

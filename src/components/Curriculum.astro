@@ -1,0 +1,78 @@
+---
+const lessons = [
+  'دور كلوديا في مشروعك.',
+  'أساسيات منصة كلود من الصفر.',
+  'فهم MCP و Connectors بطريقة بسيطة للمبتدئين.',
+  'ربط كلود بمدير الإعلانات وأدواتك الثانية.',
+  'شرح (المهارات skills) بطريقة سهلة.',
+  'تجهيز ملفات مشروعك لكلوديا.',
+  'بناء كلوديا خطوة بخطوة من الصفر.',
+  'طرق إبداعية لإستخدام كلوديا في التسويق.',
+  'أهم ١٥ طريقة للتحدث مع كلوديا.',
+  'اكتشاف أسباب هدر الميزانية التسويقية.',
+  'اكتشاف أسباب انخفاض المبيعات خلال دقائق.',
+  'تحليل كلوديا للجمهور والإعلانات والمحتوى.',
+  'تحليل كلوديا للموقع الإلكتروني.',
+  'إنشاء تقارير تسويقية.',
+  'أخطاء يقع فيها عند إستخدام كلوديا.',
+];
+---
+
+<section class="section curriculum">
+  <div class="container" data-reveal>
+    <h2 class="section-title">ماذا ستتعلم؟</h2>
+    <ol class="lesson-list">
+      {lessons.map((lesson, i) => (
+        <li>
+          <span class="lesson-num">{i + 1}</span>
+          <span>الدرس: {lesson}</span>
+        </li>
+      ))}
+    </ol>
+    <p class="curriculum-note">
+      * ملفات ومهارات وأوامر جاهزة لبناء كلوديا أسرع
+    </p>
+  </div>
+</section>
+
+<style>
+  .curriculum .container {
+    max-width: 720px;
+  }
+  .lesson-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+  .lesson-list li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-sm);
+    background: var(--card-bg);
+    border: 1px solid var(--border-subtle);
+  }
+  .lesson-num {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background: var(--brand-gradient);
+    color: #071018;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  .curriculum-note {
+    margin-block-start: var(--space-md);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-align: center;
+  }
+</style>

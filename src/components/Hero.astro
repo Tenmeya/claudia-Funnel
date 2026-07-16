@@ -1,0 +1,134 @@
+---
+import ResponsivePicture from './ResponsivePicture.astro';
+import PriceTag from './PriceTag.astro';
+import CTAButton from './CTAButton.astro';
+import Countdown from './Countdown.astro';
+
+interface Props {
+  checkoutUrl: string;
+}
+
+const { checkoutUrl } = Astro.props;
+---
+
+<section class="hero" data-hero>
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <span class="badge">دورة كلوديا</span>
+      <h1 class="hero-headline">
+        حوّل كلود إلى <span class="gradient-text">مديرة تسويق ذكية</span> تديرها من تليفونك
+      </h1>
+      <p class="hero-sub">
+        تعلّم في بس ٩٠ دقيقة شلون تبني "كلوديا" مديرة تسويق تحلّل حملاتك، تكتب
+        إعلاناتك، وتشتغل عنك ٢٤ ساعة كل يوم لزيادة مبيعاتك.
+      </p>
+      <ul class="hero-meta">
+        <li><strong>المدة:</strong> ٩٠ دقيقة</li>
+        <li><strong>الدروس:</strong> ١٥ درس</li>
+        <li><strong>مقدّم الدورة:</strong> عيد المجيبل</li>
+      </ul>
+      <PriceTag align="start" />
+      <div class="hero-countdown">
+        <span class="countdown-intro">ينتهي العرض خلال:</span>
+        <Countdown durationHours={48} align="start" />
+      </div>
+      <CTAButton href={checkoutUrl} size="lg" class="hero-cta" />
+    </div>
+    <div class="hero-media">
+      <ResponsivePicture
+        name="hero"
+        widths={[480, 700, 1050, 1406]}
+        alt="عيد المجيبل، مقدّم دورة كلوديا"
+        sizes="(max-width: 780px) 90vw, 480px"
+        loading="eager"
+        fetchpriority="high"
+        aspectRatio={1406 / 2000}
+        class="hero-img"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block-start: var(--space-xl);
+    padding-block-end: var(--space-lg);
+    background: radial-gradient(
+        circle at 20% 0%,
+        rgba(0, 211, 141, 0.12),
+        transparent 55%
+      ),
+      radial-gradient(circle at 90% 10%, rgba(0, 184, 251, 0.1), transparent 50%),
+      var(--bg-dark);
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+    align-items: start;
+  }
+  @media (min-width: 780px) {
+    .hero-grid {
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+  }
+  .badge {
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    border-radius: var(--radius-pill);
+    background: var(--card-bg);
+    border: 1px solid var(--border-subtle);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-block-end: var(--space-sm);
+  }
+  .hero-headline {
+    font-size: var(--fs-hero);
+    font-weight: 800;
+    line-height: 1.25;
+    margin: 0 0 var(--space-sm);
+  }
+  .hero-sub {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    margin-block-end: var(--space-md);
+  }
+  .hero-meta {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-md);
+    padding: 0;
+    margin: 0 0 var(--space-md);
+    font-size: 0.95rem;
+    color: var(--text-muted);
+  }
+  .hero-meta strong {
+    color: var(--text-primary);
+  }
+  .hero :global(.price-tag) {
+    margin-block-end: var(--space-md);
+  }
+  .hero-countdown {
+    margin-block-end: var(--space-md);
+  }
+  .countdown-intro {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-block-end: var(--space-xs);
+  }
+  .hero-media {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .hero :global(.hero-img) {
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    max-width: 420px;
+    width: 100%;
+    height: auto;
+  }
+</style>

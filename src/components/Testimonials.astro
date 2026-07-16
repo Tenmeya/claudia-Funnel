@@ -1,0 +1,65 @@
+---
+const testimonials = [
+  {
+    name: 'فاطمه المرهون',
+    quote: 'الدورة ممتازة وسهلة حتى للي ما عنده أي خلفية تقنية.',
+  },
+  {
+    name: 'عمار الحمادي',
+    quote:
+      'كنت أسمع عن Claude و MCP بكل مكان لكن ما كنت فاهم الفكرة، الحين كل شيء صار واضح.',
+  },
+  {
+    name: 'وجدي بن قمرة',
+    quote: 'شرح مرتب ومختصر ويوصل الفكرة بسرعة.',
+  },
+  {
+    name: 'محمد الشقري',
+    quote:
+      'الدورة أعطتني طريقة جديدة بالكامل للتعامل مع الحملات الإعلانية. الحين أستخدم Claude يومياً في شغلي.',
+  },
+];
+---
+
+<section class="section testimonials">
+  <div class="container" data-reveal>
+    <h2 class="section-title">آراء المشتركين</h2>
+    <div class="testimonial-grid">
+      {testimonials.map((t) => (
+        <figure class="testimonial-card">
+          <blockquote>{t.quote}</blockquote>
+          <figcaption>{t.name}</figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+  @media (min-width: 700px) {
+    .testimonial-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .testimonial-card {
+    margin: 0;
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    background: var(--card-bg);
+    border: 1px solid var(--border-subtle);
+  }
+  .testimonial-card blockquote {
+    margin: 0 0 var(--space-xs);
+    color: var(--text-primary);
+  }
+  .testimonial-card figcaption {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+</style>

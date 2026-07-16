@@ -1,28 +1,60 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import CTAButton from '../components/CTAButton.astro';
-import Countdown from '../components/Countdown.astro';
+import Hero from '../components/Hero.astro';
+import ProofStrip from '../components/ProofStrip.astro';
+import WhatYouGet from '../components/WhatYouGet.astro';
+import WhoIsItFor from '../components/WhoIsItFor.astro';
+import VSLSection from '../components/VSLSection.astro';
+import ClaudiaStory from '../components/ClaudiaStory.astro';
+import Testimonials from '../components/Testimonials.astro';
+import SkillsSection from '../components/SkillsSection.astro';
+import Curriculum from '../components/Curriculum.astro';
+import InstructorBio from '../components/InstructorBio.astro';
+import FreeLesson from '../components/FreeLesson.astro';
+import FAQSection from '../components/FAQSection.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+import Footer from '../components/Footer.astro';
 import StickyCTA from '../components/StickyCTA.astro';
 
 const CHECKOUT_URL = 'https://eid.tenmeya.com/step/claude-course-checkout/';
 ---
 
 <BaseLayout
-  title="دورة كلوديا"
-  description="حوّل Claude إلى مدير تسويق لك — دورة كلوديا"
+  title="دورة كلوديا — حوّل كلود إلى مديرة تسويق ذكية"
+  description="تعلّم في ٩٠ دقيقة شلون تبني كلوديا، مديرة تسويق ذكية داخل Claude تحلّل حملاتك وتكتب إعلاناتك وتشتغل عنك ٢٤ ساعة كل يوم."
 >
   <main>
-    <section class="section" data-hero>
-      <div class="container" data-reveal>
-        <h1 class="gradient-text">دورة كلوديا</h1>
-        <p>هيكل الصفحة قيد الإنشاء — بانتظار المحتوى والصور النهائية.</p>
-        <Countdown durationHours={48} />
-        <CTAButton href={CHECKOUT_URL} size="lg" />
-      </div>
-    </section>
+    <Hero checkoutUrl={CHECKOUT_URL} />
+    <ProofStrip />
+    <WhatYouGet checkoutUrl={CHECKOUT_URL} />
+    <WhoIsItFor checkoutUrl={CHECKOUT_URL} />
+    <VSLSection />
+    <ClaudiaStory />
+    <Testimonials />
+    <SkillsSection checkoutUrl={CHECKOUT_URL} />
+    <Curriculum />
+    <InstructorBio />
+    <FreeLesson />
+    <FAQSection />
+    <FinalCTA checkoutUrl={CHECKOUT_URL} />
+    <Footer checkoutUrl={CHECKOUT_URL} />
   </main>
 
   <StickyCTA checkoutUrl={CHECKOUT_URL}>
-    <span>سجّل الآن</span>
+    <span class="sticky-price">٩٩$ <s>١٤٩$</s></span>
   </StickyCTA>
 </BaseLayout>
+
+<style>
+  .sticky-price {
+    font-weight: 700;
+    font-size: 1rem;
+    white-space: nowrap;
+  }
+  .sticky-price s {
+    color: var(--text-faint);
+    font-weight: 400;
+    font-size: 0.85rem;
+    margin-inline-start: 0.35rem;
+  }
+</style>

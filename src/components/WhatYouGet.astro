@@ -1,0 +1,90 @@
+---
+import ResponsivePicture from './ResponsivePicture.astro';
+import PriceTag from './PriceTag.astro';
+import CTAButton from './CTAButton.astro';
+
+interface Props {
+  checkoutUrl: string;
+}
+const { checkoutUrl } = Astro.props;
+
+const items = [
+  '١٥ فيديو مسجّل وجاهز (دروس عملية).',
+  'ملفات خاصة فيها أسرار بناء كلوديا (أوامر ومهارات).',
+  'مجتمع خاص لكل المشتركين داخل التطبيق.',
+  'قسم للمناقشة والأسئلة ومشاركة نجاحاتك.',
+  'لقاءات حصرية أونلاين خاصة بالمشتركين على زووم.',
+];
+---
+
+<section class="section what-you-get">
+  <div class="container grid-layout" data-reveal>
+    <div class="text-col">
+      <h2 class="section-title" style="text-align: start">ماذا ستحصل في الدورة؟</h2>
+      <ul class="check-list">
+        {items.map((item) => (
+          <li>
+            <span class="check-icon" aria-hidden="true">✓</span>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+      <PriceTag align="start" />
+      <CTAButton href={checkoutUrl} size="lg" />
+    </div>
+    <div class="image-col">
+      <ResponsivePicture
+        name="bonus-gift"
+        widths={[400, 700, 1254]}
+        alt="ملفات وقوالب وأوامر جاهزة لبناء كلوديا"
+        sizes="(max-width: 780px) 70vw, 380px"
+        aspectRatio={1}
+        class="gift-img"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+  @media (min-width: 780px) {
+    .grid-layout {
+      grid-template-columns: 1.2fr 0.8fr;
+    }
+  }
+  .check-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+  .check-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+  .check-icon {
+    flex-shrink: 0;
+    color: var(--teal);
+    font-weight: 800;
+  }
+  .what-you-get :global(.price-tag) {
+    margin-block-end: var(--space-md);
+  }
+  .image-col {
+    display: flex;
+    justify-content: center;
+  }
+  .what-you-get :global(.gift-img) {
+    border-radius: var(--radius-lg);
+    max-width: 320px;
+    width: 100%;
+  }
+</style>

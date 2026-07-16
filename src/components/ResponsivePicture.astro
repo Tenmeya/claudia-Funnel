@@ -1,0 +1,47 @@
+---
+// Renders <picture> with AVIF/WebP sources generated at build time into
+// /public/images as `${name}-${width}.{avif,webp}`. Pass the full available
+// width set; the browser picks the best match via `sizes`.
+interface Props {
+  name: string;
+  widths: number[];
+  alt: string;
+  sizes?: string;
+  loading?: 'lazy' | 'eager';
+  fetchpriority?: 'high' | 'low' | 'auto';
+  class?: string;
+  aspectRatio: number; // width / height
+}
+
+const {
+  name,
+  widths,
+  alt,
+  sizes = '100vw',
+  loading = 'lazy',
+  fetchpriority = 'auto',
+  class: className = '',
+  aspectRatio,
+} = Astro.props;
+
+const maxWidth = Math.max(...widths);
+const height = Math.round(maxWidth / aspectRatio);
+
+const srcset = (ext) =>
+  widths.map((w) => `/images/${name}-${w}.${ext} ${w}w`).join(', ');
+---
+
+<picture>
+  <source type="image/avif" srcset={srcset('avif')} sizes={sizes} />
+  <source type="image/webp" srcset={srcset('webp')} sizes={sizes} />
+  <img
+    src={`/images/${name}-${maxWidth}.webp`}
+    alt={alt}
+    width={maxWidth}
+    height={height}
+    loading={loading}
+    fetchpriority={fetchpriority}
+    decoding="async"
+    class={className}
+  />
+</picture>

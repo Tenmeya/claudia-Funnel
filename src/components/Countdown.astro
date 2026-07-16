@@ -6,17 +6,19 @@ interface Props {
   durationHours?: number;
   fixedDeadline?: string;
   storageKey?: string;
+  align?: 'center' | 'start';
 }
 
 const {
   durationHours = 48,
   fixedDeadline,
   storageKey = 'claudia_offer_deadline',
+  align = 'center',
 } = Astro.props;
 ---
 
 <div
-  class="countdown"
+  class:list={['countdown', align]}
   data-countdown
   data-duration-hours={durationHours}
   data-fixed-deadline={fixedDeadline ?? ''}
@@ -45,6 +47,9 @@ const {
     display: flex;
     gap: var(--space-sm);
     justify-content: center;
+  }
+  .countdown.start {
+    justify-content: flex-start;
   }
   .countdown-unit {
     display: flex;

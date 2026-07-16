@@ -1,0 +1,47 @@
+---
+import PriceTag from './PriceTag.astro';
+import CTAButton from './CTAButton.astro';
+
+interface Props {
+  checkoutUrl: string;
+}
+const { checkoutUrl } = Astro.props;
+---
+
+<section class="section final-cta">
+  <div class="container" data-reveal>
+    <h2 class="section-title">جاهز تبني كلوديا؟</h2>
+    <p class="final-sub">
+      ٩٠ دقيقة بس تفصلك عن مديرة تسويق تشتغل عنك ٢٤ ساعة كل يوم.
+    </p>
+    <div class="cta-row">
+      <PriceTag />
+      <CTAButton href={checkoutUrl} size="lg" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .final-cta {
+    background: radial-gradient(
+        circle at 50% 100%,
+        rgba(0, 211, 141, 0.14),
+        transparent 60%
+      ),
+      var(--bg-dark-alt);
+  }
+  .final-cta .container {
+    max-width: 560px;
+    text-align: center;
+  }
+  .final-sub {
+    color: var(--text-muted);
+    margin-block-end: var(--space-lg);
+  }
+  .cta-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+  }
+</style>

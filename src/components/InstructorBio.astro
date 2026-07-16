@@ -1,0 +1,93 @@
+---
+import ResponsivePicture from './ResponsivePicture.astro';
+---
+
+<section class="section instructor-bio">
+  <div class="container bio-grid" data-reveal>
+    <div class="bio-media">
+      <ResponsivePicture
+        name="bio"
+        widths={[400, 700, 1080]}
+        alt="عيد المجيبل"
+        sizes="(max-width: 780px) 60vw, 320px"
+        aspectRatio={1}
+        class="bio-portrait"
+      />
+      <ResponsivePicture
+        name="journey-collage"
+        widths={[400, 700, 1080]}
+        alt="محطات من رحلة عيد المجيبل المهنية"
+        sizes="(max-width: 780px) 90vw, 420px"
+        aspectRatio={1}
+        class="bio-collage"
+      />
+    </div>
+    <div class="bio-copy">
+      <h2 class="section-title" style="text-align: start">مقدّم الدورة</h2>
+      <h3 class="bio-name">عيد المجيبل</h3>
+      <p>
+        كنت أقضي ساعات أحلل الأرقام في حملاتي الإعلانية - والصراحة كان الموضوع
+        مزعج.
+      </p>
+      <p>
+        بس الAI غيّر كل شي … الحين عندي مديرة تسويق تشتغل ٢٤ ساعة أديرها من
+        التليفون.
+      </p>
+      <p>
+        قبل سنتين كنت أحتاج موظّف راتبه لا يقل عن ٥ آلاف دولار كمدير تسويق -
+        بس اليوم مع "كلوديا" كل شي تغيّر.
+      </p>
+      <p>
+        في ٩٠ دقيقة بعلمك شلون أخيراً تحل مشكلة التسويق في مشروعك وشلون
+        تستغل أكبر موجه في العالم … الAI.
+      </p>
+      <p class="bio-signoff">متحمس نبدأ … نشوفك داخل.<br />عيد.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .bio-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+  @media (min-width: 780px) {
+    .bio-grid {
+      grid-template-columns: 0.9fr 1.1fr;
+    }
+  }
+  .bio-media {
+    position: relative;
+  }
+  .instructor-bio :global(.bio-collage) {
+    border-radius: var(--radius-lg);
+    width: 100%;
+  }
+  .instructor-bio :global(.bio-portrait) {
+    position: absolute;
+    inset-inline-start: -1.25rem;
+    bottom: -1.25rem;
+    width: 40%;
+    max-width: 160px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    border: 3px solid var(--bg-dark);
+  }
+  .bio-name {
+    font-size: var(--fs-h3);
+    background: var(--brand-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin: 0 0 var(--space-sm);
+  }
+  .bio-copy p {
+    color: var(--text-muted);
+  }
+  .bio-signoff {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+</style>
