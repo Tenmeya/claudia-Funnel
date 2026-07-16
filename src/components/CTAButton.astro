@@ -1,0 +1,72 @@
+---
+interface Props {
+  href: string;
+  label?: string;
+  eventName?: string;
+  size?: 'md' | 'lg';
+  class?: string;
+}
+
+const {
+  href,
+  label = 'سجّلني',
+  eventName = 'Checkout click',
+  size = 'md',
+  class: className = '',
+} = Astro.props;
+---
+
+<a
+  class:list={['cta-button', size, className]}
+  href={href}
+  target="_blank"
+  rel="noopener"
+  data-track-event={eventName}
+>
+  {label}
+</a>
+
+<style>
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--brand-gradient);
+    color: #071018;
+    font-weight: 700;
+    border-radius: var(--radius-pill);
+    text-align: center;
+    white-space: nowrap;
+    transition: transform var(--duration-fast) var(--ease-standard),
+      filter var(--duration-fast) var(--ease-standard);
+    will-change: transform;
+  }
+  .cta-button.md {
+    padding: 0.85rem 2rem;
+    font-size: 1rem;
+  }
+  .cta-button.lg {
+    padding: 1.1rem 2.75rem;
+    font-size: 1.15rem;
+  }
+  .cta-button:hover,
+  .cta-button:focus-visible {
+    transform: scale(1.02);
+    filter: brightness(1.08);
+  }
+  .cta-button:active {
+    transform: scale(0.99);
+  }
+</style>
+
+<script>
+  import { trackEvent } from '../scripts/analytics.js';
+
+  document.querySelectorAll('[data-track-event]').forEach((el) => {
+    el.addEventListener('click', () => {
+      const eventName = el.getAttribute('data-track-event') || 'Checkout click';
+      trackEvent(eventName, { href: el.getAttribute('href') });
+    });
+  });
+</script>

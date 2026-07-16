@@ -1,0 +1,45 @@
+:root {
+  /* Colors */
+  --bg-dark: #0b0f1a;
+  --bg-dark-alt: #0f1424;
+  --teal: #00d38d;
+  --blue: #00b8fb;
+  --brand-gradient: linear-gradient(to right, #00d38d, #00b8fb);
+  --text-primary: #ffffff;
+  --text-muted: rgba(255, 255, 255, 0.7);
+  --text-faint: rgba(255, 255, 255, 0.5);
+  --border-subtle: rgba(255, 255, 255, 0.1);
+  --card-bg: rgba(255, 255, 255, 0.04);
+
+  /* Shape & elevation */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 28px;
+  --radius-pill: 999px;
+  --shadow-card: 0 20px 50px rgba(0, 0, 0, 0.45);
+  --shadow-ring: 0 0 0 4px rgba(255, 255, 255, 0.12);
+
+  /* Spacing */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 4rem;
+  --space-2xl: 6rem;
+
+  /* Layout */
+  --container-width: 1120px;
+  --container-padding: 1.25rem;
+
+  /* Typography scale */
+  --fs-hero: clamp(2rem, 5.5vw, 3.25rem);
+  --fs-h2: clamp(1.5rem, 3.5vw, 2.25rem);
+  --fs-h3: clamp(1.15rem, 2.5vw, 1.5rem);
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+
+  /* Motion */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration-medium: 300ms;
+}

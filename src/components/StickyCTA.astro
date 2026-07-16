@@ -1,0 +1,59 @@
+---
+import CTAButton from './CTAButton.astro';
+
+interface Props {
+  checkoutUrl: string;
+}
+
+const { checkoutUrl } = Astro.props;
+---
+
+<div class="sticky-cta" data-sticky-cta>
+  <div class="sticky-cta-inner">
+    <slot />
+    <CTAButton href={checkoutUrl} size="md" eventName="Checkout click (sticky bar)" />
+  </div>
+</div>
+
+<style>
+  .sticky-cta {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 40;
+    background: rgba(11, 15, 26, 0.92);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid var(--border-subtle);
+    transform: translateY(100%);
+    transition: transform var(--duration-medium) var(--ease-standard);
+  }
+  .sticky-cta.is-visible {
+    transform: translateY(0);
+  }
+  .sticky-cta-inner {
+    max-width: var(--container-width);
+    margin-inline: auto;
+    padding: 0.75rem var(--container-padding);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+  }
+</style>
+
+<script>
+  const bar = document.querySelector('[data-sticky-cta]');
+  const hero = document.querySelector('[data-hero]');
+
+  if (bar && hero && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        bar.classList.toggle('is-visible', !entry.isIntersecting);
+      },
+      { rootMargin: '0px' }
+    );
+    observer.observe(hero);
+  } else if (bar) {
+    bar.classList.add('is-visible');
+  }
+</script>

@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CTAButton from '../components/CTAButton.astro';
+import Countdown from '../components/Countdown.astro';
+import StickyCTA from '../components/StickyCTA.astro';
+
+const CHECKOUT_URL = 'https://eid.tenmeya.com/step/claude-course-checkout/';
+---
+
+<BaseLayout
+  title="دورة كلوديا"
+  description="حوّل Claude إلى مدير تسويق لك — دورة كلوديا"
+>
+  <main>
+    <section class="section" data-hero>
+      <div class="container" data-reveal>
+        <h1 class="gradient-text">دورة كلوديا</h1>
+        <p>هيكل الصفحة قيد الإنشاء — بانتظار المحتوى والصور النهائية.</p>
+        <Countdown durationHours={48} />
+        <CTAButton href={CHECKOUT_URL} size="lg" />
+      </div>
+    </section>
+  </main>
+
+  <StickyCTA checkoutUrl={CHECKOUT_URL}>
+    <span>سجّل الآن</span>
+  </StickyCTA>
+</BaseLayout>

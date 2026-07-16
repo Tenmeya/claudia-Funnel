@@ -1,0 +1,143 @@
+---
+interface Props {
+  // Evergreen: each visitor gets their own deadline, persisted so it survives
+  // reloads/repeat visits in the same browser. Falls back to a fixed campaign
+  // deadline instead if `fixedDeadline` (ISO string) is supplied.
+  durationHours?: number;
+  fixedDeadline?: string;
+  storageKey?: string;
+}
+
+const {
+  durationHours = 48,
+  fixedDeadline,
+  storageKey = 'claudia_offer_deadline',
+} = Astro.props;
+---
+
+<div
+  class="countdown"
+  data-countdown
+  data-duration-hours={durationHours}
+  data-fixed-deadline={fixedDeadline ?? ''}
+  data-storage-key={storageKey}
+>
+  <div class="countdown-unit">
+    <span class="countdown-value" data-unit="days">00</span>
+    <span class="countdown-label">يوم</span>
+  </div>
+  <div class="countdown-unit">
+    <span class="countdown-value" data-unit="hours">00</span>
+    <span class="countdown-label">ساعة</span>
+  </div>
+  <div class="countdown-unit">
+    <span class="countdown-value" data-unit="minutes">00</span>
+    <span class="countdown-label">دقيقة</span>
+  </div>
+  <div class="countdown-unit">
+    <span class="countdown-value" data-unit="seconds">00</span>
+    <span class="countdown-label">ثانية</span>
+  </div>
+</div>
+
+<style>
+  .countdown {
+    display: flex;
+    gap: var(--space-sm);
+    justify-content: center;
+  }
+  .countdown-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 3.25rem;
+    padding: 0.6rem 0.4rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+  }
+  .countdown-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .countdown-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+  }
+</style>
+
+<script>
+  function initCountdown(root) {
+    const durationHours = Number(root.dataset.durationHours) || 48;
+    const fixedDeadline = root.dataset.fixedDeadline;
+    const storageKey = root.dataset.storageKey || 'claudia_offer_deadline';
+
+    const getDeadline = () => {
+      if (fixedDeadline) {
+        const t = Date.parse(fixedDeadline);
+        return Number.isNaN(t) ? Date.now() + durationHours * 3600000 : t;
+      }
+
+      let stored = null;
+      try {
+        stored = window.localStorage.getItem(storageKey);
+      } catch (_) {
+        // localStorage can throw in locked-down/private WebViews; fall back silently.
+      }
+
+      let deadline = stored ? Number(stored) : NaN;
+
+      if (!Number.isFinite(deadline) || deadline <= Date.now()) {
+        deadline = Date.now() + durationHours * 3600000;
+        try {
+          window.localStorage.setItem(storageKey, String(deadline));
+        } catch (_) {}
+      }
+
+      return deadline;
+    };
+
+    const deadline = getDeadline();
+    const els = {
+      days: root.querySelector('[data-unit="days"]'),
+      hours: root.querySelector('[data-unit="hours"]'),
+      minutes: root.querySelector('[data-unit="minutes"]'),
+      seconds: root.querySelector('[data-unit="seconds"]'),
+    };
+
+    const pad = (n) => String(Math.max(0, n)).padStart(2, '0');
+
+    function tick() {
+      const remaining = deadline - Date.now();
+      if (remaining <= 0) {
+        root.dispatchEvent(new CustomEvent('countdown:expired'));
+        els.days.textContent = '00';
+        els.hours.textContent = '00';
+        els.minutes.textContent = '00';
+        els.seconds.textContent = '00';
+        return;
+      }
+      const totalSeconds = Math.floor(remaining / 1000);
+      els.days.textContent = pad(Math.floor(totalSeconds / 86400));
+      els.hours.textContent = pad(Math.floor((totalSeconds % 86400) / 3600));
+      els.minutes.textContent = pad(Math.floor((totalSeconds % 3600) / 60));
+      els.seconds.textContent = pad(totalSeconds % 60);
+      requestAnimationFrame(scheduleNext);
+    }
+
+    let lastRun = 0;
+    function scheduleNext(now) {
+      if (now - lastRun >= 1000) {
+        lastRun = now;
+        tick();
+      } else {
+        requestAnimationFrame(scheduleNext);
+      }
+    }
+
+    tick();
+  }
+
+  document.querySelectorAll('[data-countdown]').forEach(initCountdown);
+</script>

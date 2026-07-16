@@ -1,0 +1,106 @@
+---
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  items: FAQItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="faq" data-faq>
+  {
+    items.map((item, i) => (
+      <div class="faq-item">
+        <button
+          class="faq-question"
+          type="button"
+          aria-expanded="false"
+          aria-controls={`faq-panel-${i}`}
+          id={`faq-question-${i}`}
+        >
+          <span>{item.question}</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div
+          class="faq-panel"
+          id={`faq-panel-${i}`}
+          role="region"
+          aria-labelledby={`faq-question-${i}`}
+        >
+          <p class="faq-answer">{item.answer}</p>
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .faq {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+  .faq-item {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    background: var(--card-bg);
+    overflow: hidden;
+  }
+  .faq-question {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: start;
+    cursor: pointer;
+  }
+  .faq-icon {
+    flex-shrink: 0;
+    font-size: 1.25rem;
+    font-weight: 300;
+    transition: transform var(--duration-fast) var(--ease-standard);
+  }
+  .faq-question[aria-expanded='true'] .faq-icon {
+    transform: rotate(45deg);
+  }
+  .faq-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--duration-medium) var(--ease-standard);
+  }
+  .faq-panel > .faq-answer {
+    overflow: hidden;
+    min-height: 0;
+    margin: 0;
+    padding-inline: var(--space-md);
+    color: var(--text-muted);
+  }
+  .faq-item.is-open .faq-panel {
+    grid-template-rows: 1fr;
+  }
+  .faq-item.is-open .faq-answer {
+    padding-block-end: var(--space-md);
+  }
+</style>
+
+<script>
+  document.querySelectorAll('[data-faq] .faq-question').forEach((button) => {
+    button.addEventListener('click', () => {
+      const item = button.closest('.faq-item');
+      const isOpen = item.classList.toggle('is-open');
+      button.setAttribute('aria-expanded', String(isOpen));
+    });
+  });
+</script>
