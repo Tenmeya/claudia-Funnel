@@ -14,7 +14,7 @@ const { items } = Astro.props;
 <div class="faq" data-faq>
   {
     items.map((item, i) => (
-      <div class="faq-item">
+      <div class="faq-item" data-reveal style={`--stagger-i: ${Math.min(i, 4)}`}>
         <button
           class="faq-question"
           type="button"
@@ -23,7 +23,17 @@ const { items } = Astro.props;
           id={`faq-question-${i}`}
         >
           <span>{item.question}</span>
-          <span class="faq-icon" aria-hidden="true">+</span>
+          <span class="faq-icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path
+                d="M3 5.25 7 9.25l4-4"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </span>
         </button>
         <div
           class="faq-panel"
@@ -49,6 +59,12 @@ const { items } = Astro.props;
     border-radius: var(--radius-md);
     background: var(--card-bg);
     overflow: hidden;
+    transition: border-color var(--duration-medium) var(--ease-premium),
+      background var(--duration-medium) var(--ease-premium);
+  }
+  .faq-item.is-open {
+    border-color: var(--border-hover);
+    background: var(--card-bg-hover);
   }
   .faq-question {
     width: 100%;
@@ -68,12 +84,21 @@ const { items } = Astro.props;
   }
   .faq-icon {
     flex-shrink: 0;
-    font-size: 1.25rem;
-    font-weight: 300;
-    transition: transform var(--duration-fast) var(--ease-standard);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background: rgba(0, 211, 141, 0.1);
+    color: var(--accent);
+    transition: transform var(--duration-medium) var(--ease-premium),
+      background var(--duration-medium) var(--ease-premium);
   }
   .faq-question[aria-expanded='true'] .faq-icon {
-    transform: rotate(45deg);
+    transform: rotate(180deg);
+    background: var(--brand-gradient);
+    color: #071018;
   }
   .faq-panel {
     display: grid;

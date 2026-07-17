@@ -65,6 +65,17 @@ html {
   scroll-behavior: smooth;
 }
 
+::selection {
+  background: rgba(0, 211, 141, 0.28);
+  color: var(--text-primary);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -78,6 +89,7 @@ html {
 
 body {
   margin: 0;
+  overflow-x: hidden;
   background: var(--bg-dark);
   color: var(--text-primary);
   font-family: 'Lina Round', 'Tajawal', sans-serif;
@@ -106,13 +118,46 @@ a {
   padding-inline: var(--container-padding);
 }
 
+/* Section rhythm: default padding, with modifiers so dense/light sections
+   don't all breathe identically — .section--tight for compact list-style
+   sections, .section--roomy for the highest-attention moments. */
 .section {
   padding-block: var(--space-2xl);
+}
+.section--tight {
+  padding-block: var(--space-xl);
+}
+.section--roomy {
+  padding-block: var(--space-3xl);
+}
+.section-alt {
+  background: var(--bg-dark-alt);
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--fs-small);
+  font-weight: 700;
+  letter-spacing: var(--tracking-wide);
+  color: var(--accent);
+  margin-block-end: var(--space-sm);
+}
+.kicker::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brand-gradient);
+  flex-shrink: 0;
 }
 
 .section-title {
   font-size: var(--fs-h2);
   font-weight: 700;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
   text-align: center;
   margin-block-end: var(--space-lg);
 }
@@ -124,21 +169,108 @@ a {
   color: transparent;
 }
 
-/* Scroll-reveal: JS adds .is-visible when element enters viewport */
+.link-underline {
+  position: relative;
+  display: inline-block;
+}
+.link-underline::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: -2px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform var(--duration-medium) var(--ease-premium);
+}
+[dir='rtl'] .link-underline::after {
+  transform-origin: left center;
+}
+.link-underline:hover::after,
+.link-underline:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Shared list treatment for the checklist-style sections (what-you-get,
+   who-is-it-for, skills) so the markup isn't re-declaring identical CSS
+   three times over. */
+.check-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.check-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+.check-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-block-start: 0.05rem;
+  border-radius: 50%;
+  background: rgba(0, 211, 141, 0.12);
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+.cta-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+/* Reusable elevated-surface card: layered shadow + hairline border that
+   brightens on hover, subtle lift. Compose with utility classes rather
+   than re-declaring per component. */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--duration-medium) var(--ease-premium),
+    box-shadow var(--duration-medium) var(--ease-premium),
+    border-color var(--duration-medium) var(--ease-premium),
+    background var(--duration-medium) var(--ease-premium);
+}
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-hover);
+  background: var(--card-bg-hover);
+  box-shadow: var(--shadow-md);
+}
+
+/* Scroll-reveal: JS adds .is-visible when element enters viewport.
+   Items can opt into a stagger via inline `style="--stagger-i: N"`. */
 [data-reveal] {
+  --stagger-i: 0;
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity var(--duration-medium) var(--ease-standard),
-    transform var(--duration-medium) var(--ease-standard);
+  transform: translateY(28px);
+  filter: blur(6px);
+  transition: opacity var(--duration-slow) var(--ease-premium),
+    transform var(--duration-slow) var(--ease-premium),
+    filter var(--duration-slow) var(--ease-premium);
+  transition-delay: calc(var(--stagger-i) * var(--stagger-step));
 }
 [data-reveal].is-visible {
   opacity: 1;
   transform: translateY(0);
+  filter: blur(0);
 }
 @media (prefers-reduced-motion: reduce) {
   [data-reveal] {
     opacity: 1;
     transform: none;
+    filter: none;
     transition: none;
   }
 }

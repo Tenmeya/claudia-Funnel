@@ -2,38 +2,69 @@
 // Highest-attention slot right under the hero — one strong testimonial.
 ---
 
-<section class="section proof-strip">
-  <div class="container" data-reveal>
-    <blockquote class="proof-quote">
+<section class="section section--tight proof-strip">
+  <div class="container">
+    <blockquote class="proof-quote card" data-reveal>
+      <svg class="quote-mark" width="32" height="24" viewBox="0 0 32 24" fill="none" aria-hidden="true">
+        <path
+          d="M13.5 0C6 2.5 0 9 0 16.5 0 21 3 24 7 24s7-3 7-7c0-3.5-2-6-5-7 1-3 4-5 7-6L13.5 0Zm18 0C24 2.5 18 9 18 16.5c0 4.5 3 7.5 7 7.5s7-3 7-7c0-3.5-2-6-5-7 1-3 4-5 7-6L31.5 0Z"
+          fill="url(#proofGradient)"
+        />
+        <defs>
+          <linearGradient id="proofGradient" x1="0" y1="0" x2="32" y2="24" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#00D38D" />
+            <stop offset="1" stop-color="#00B8FB" />
+          </linearGradient>
+        </defs>
+      </svg>
       <p>
         الدورة أعطتني طريقة جديدة بالكامل للتعامل مع الحملات الإعلانية. الحين
         أستخدم Claude يومياً في شغلي.
       </p>
-      <footer>— محمد الشقري</footer>
+      <footer>
+        <span class="avatar-chip" aria-hidden="true">م</span>
+        <span>محمد الشقري</span>
+      </footer>
     </blockquote>
   </div>
 </section>
 
 <style>
-  .proof-strip {
-    padding-block: var(--space-lg);
-  }
   .proof-quote {
     margin: 0 auto;
     max-width: 640px;
     text-align: center;
     padding: var(--space-lg);
     border-radius: var(--radius-lg);
-    background: var(--card-bg);
-    border: 1px solid var(--border-subtle);
+  }
+  .quote-mark {
+    margin-block-end: var(--space-sm);
   }
   .proof-quote p {
-    font-size: 1.15rem;
+    font-size: var(--fs-lead);
     font-weight: 600;
-    margin: 0 0 var(--space-sm);
+    line-height: var(--lh-snug);
+    margin: 0 0 var(--space-md);
   }
   .proof-quote footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
     color: var(--text-muted);
     font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .avatar-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background: var(--brand-gradient);
+    color: #071018;
+    font-weight: 800;
+    font-size: 0.85rem;
   }
 </style>

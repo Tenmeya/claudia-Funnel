@@ -13,16 +13,36 @@ interface Props {
 const { mediaId, aspect = 0.5625, label } = Astro.props;
 ---
 
-<div class="wistia-wrap" data-wistia-lazy data-media-id={mediaId}>
-  <wistia-player media-id={mediaId} seo="false" aspect={aspect} aria-label={label}
-  ></wistia-player>
+<div class="wistia-frame">
+  <div class="wistia-glow" aria-hidden="true"></div>
+  <div class="wistia-wrap" data-wistia-lazy data-media-id={mediaId}>
+    <wistia-player media-id={mediaId} seo="false" aspect={aspect} aria-label={label}
+    ></wistia-player>
+  </div>
 </div>
 
 <style define:vars={{ aspect }}>
+  .wistia-frame {
+    position: relative;
+  }
+  .wistia-glow {
+    position: absolute;
+    inset: -6%;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(0, 184, 251, 0.16),
+      transparent 65%
+    );
+    filter: blur(28px);
+    z-index: 0;
+  }
   .wistia-wrap {
+    position: relative;
+    z-index: 1;
     border-radius: var(--radius-lg);
     overflow: hidden;
-    box-shadow: var(--shadow-card);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-subtle);
   }
   .wistia-wrap wistia-player:not(:defined) {
     display: block;

@@ -18,18 +18,18 @@ const lessons = [
 ];
 ---
 
-<section class="section curriculum">
-  <div class="container" data-reveal>
-    <h2 class="section-title">ماذا ستتعلم؟</h2>
+<section class="section section-alt curriculum">
+  <div class="container">
+    <h2 class="section-title" data-reveal>ماذا ستتعلم؟</h2>
     <ol class="lesson-list">
       {lessons.map((lesson, i) => (
-        <li>
+        <li data-reveal style={`--stagger-i: ${Math.min(i, 6)}`}>
           <span class="lesson-num">{i + 1}</span>
           <span>الدرس: {lesson}</span>
         </li>
       ))}
     </ol>
-    <p class="curriculum-note">
+    <p class="curriculum-note" data-reveal>
       * ملفات ومهارات وأوامر جاهزة لبناء كلوديا أسرع
     </p>
   </div>
@@ -40,6 +40,7 @@ const lessons = [
     max-width: 720px;
   }
   .lesson-list {
+    position: relative;
     list-style: none;
     padding: 0;
     margin: 0;
@@ -47,7 +48,23 @@ const lessons = [
     flex-direction: column;
     gap: var(--space-xs);
   }
+  .lesson-list::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: calc(0.875rem + var(--space-sm) + 1px);
+    top: 1.75rem;
+    bottom: 1.75rem;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      var(--border-subtle),
+      var(--border-hover),
+      var(--border-subtle)
+    );
+  }
   .lesson-list li {
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
     gap: var(--space-sm);
@@ -55,6 +72,12 @@ const lessons = [
     border-radius: var(--radius-sm);
     background: var(--card-bg);
     border: 1px solid var(--border-subtle);
+    transition: background var(--duration-medium) var(--ease-premium),
+      border-color var(--duration-medium) var(--ease-premium);
+  }
+  .lesson-list li:hover {
+    background: var(--card-bg-hover);
+    border-color: var(--border-hover);
   }
   .lesson-num {
     flex-shrink: 0;
@@ -64,8 +87,9 @@ const lessons = [
     width: 1.75rem;
     height: 1.75rem;
     border-radius: 50%;
-    background: var(--brand-gradient);
-    color: #071018;
+    background: var(--bg-dark-raised);
+    border: 1px solid var(--border-hover);
+    color: var(--accent);
     font-weight: 700;
     font-size: 0.85rem;
   }

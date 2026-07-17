@@ -23,11 +23,23 @@ const {
   rel="noopener"
   data-track-event={eventName}
 >
-  {label}
+  <span class="cta-label">{label}</span>
+  <span class="cta-arrow" aria-hidden="true">
+    <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+      <path
+        d="M4 10h11.5M9.5 4.5 15 10l-5.5 5.5"
+        stroke="currentColor"
+        stroke-width="1.75"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  </span>
 </a>
 
 <style>
   .cta-button {
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -38,25 +50,60 @@ const {
     border-radius: var(--radius-pill);
     text-align: center;
     white-space: nowrap;
-    transition: transform var(--duration-fast) var(--ease-standard),
+    box-shadow: 0 8px 24px rgba(0, 184, 251, 0.22);
+    transition: transform var(--duration-medium) var(--ease-premium),
+      box-shadow var(--duration-medium) var(--ease-premium),
       filter var(--duration-fast) var(--ease-standard);
     will-change: transform;
   }
   .cta-button.md {
-    padding: 0.85rem 2rem;
+    padding: 0.85rem 1.85rem;
     font-size: 1rem;
   }
   .cta-button.lg {
-    padding: 1.1rem 2.75rem;
+    padding: 1.05rem 2.5rem;
     font-size: 1.15rem;
+    animation: pulse-glow 3.6s var(--ease-standard) infinite;
+  }
+  .cta-arrow {
+    display: inline-flex;
+    transition: transform var(--duration-medium) var(--ease-premium);
+  }
+  /* Arrow points toward reading-start in RTL; flip so hover motion reads correctly */
+  [dir='rtl'] .cta-arrow svg {
+    transform: scaleX(-1);
+  }
+  .cta-button:hover .cta-arrow,
+  .cta-button:focus-visible .cta-arrow {
+    transform: translateX(4px);
+  }
+  [dir='rtl'] .cta-button:hover .cta-arrow,
+  [dir='rtl'] .cta-button:focus-visible .cta-arrow {
+    transform: translateX(-4px);
   }
   .cta-button:hover,
   .cta-button:focus-visible {
-    transform: scale(1.02);
+    transform: translateY(-2px) scale(1.015);
     filter: brightness(1.08);
+    box-shadow: 0 14px 32px rgba(0, 184, 251, 0.3);
   }
   .cta-button:active {
-    transform: scale(0.99);
+    transform: translateY(0) scale(0.99);
+    animation-play-state: paused;
+  }
+  @keyframes pulse-glow {
+    0%,
+    100% {
+      box-shadow: 0 8px 24px rgba(0, 184, 251, 0.22), 0 0 0 0 rgba(0, 211, 141, 0.16);
+    }
+    50% {
+      box-shadow: 0 8px 24px rgba(0, 184, 251, 0.22), 0 0 0 10px rgba(0, 211, 141, 0);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cta-button.lg {
+      animation: none;
+    }
   }
 </style>
 

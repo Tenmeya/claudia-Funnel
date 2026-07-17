@@ -17,22 +17,26 @@ const items = [
 ];
 ---
 
-<section class="section what-you-get">
-  <div class="container grid-layout" data-reveal>
+<section class="section section-alt what-you-get">
+  <div class="container grid-layout">
     <div class="text-col">
-      <h2 class="section-title" style="text-align: start">ماذا ستحصل في الدورة؟</h2>
+      <h2 class="section-title" data-reveal style="text-align: start">
+        ماذا ستحصل في الدورة؟
+      </h2>
       <ul class="check-list">
-        {items.map((item) => (
-          <li>
+        {items.map((item, i) => (
+          <li data-reveal style={`--stagger-i: ${i + 2}`}>
             <span class="check-icon" aria-hidden="true">✓</span>
             <span>{item}</span>
           </li>
         ))}
       </ul>
-      <PriceTag align="start" />
-      <CTAButton href={checkoutUrl} size="lg" />
+      <div data-reveal style="--stagger-i: 7">
+        <PriceTag align="start" />
+        <CTAButton href={checkoutUrl} size="lg" />
+      </div>
     </div>
-    <div class="image-col">
+    <div class="image-col" data-reveal style="--stagger-i: 3">
       <ResponsivePicture
         name="bonus-gift"
         widths={[400, 700, 1254]}
@@ -55,25 +59,8 @@ const items = [
   @media (min-width: 780px) {
     .grid-layout {
       grid-template-columns: 1.2fr 0.8fr;
+      gap: var(--space-xl);
     }
-  }
-  .check-list {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 var(--space-md);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-  }
-  .check-list li {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.6rem;
-  }
-  .check-icon {
-    flex-shrink: 0;
-    color: var(--teal);
-    font-weight: 800;
   }
   .what-you-get :global(.price-tag) {
     margin-block-end: var(--space-md);
@@ -84,6 +71,7 @@ const items = [
   }
   .what-you-get :global(.gift-img) {
     border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
     max-width: 320px;
     width: 100%;
   }

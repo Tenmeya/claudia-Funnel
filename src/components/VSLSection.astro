@@ -2,10 +2,12 @@
 import WistiaEmbed from './WistiaEmbed.astro';
 ---
 
-<section class="section vsl-section">
-  <div class="container" data-reveal>
-    <h2 class="section-title">شوف كل تفاصيل الكورس في دقيقتين</h2>
-    <WistiaEmbed mediaId="yb3il14voo" label="فيديو تعريفي عن دورة كلوديا" />
+<section class="section section-alt vsl-section">
+  <div class="container">
+    <h2 class="section-title" data-reveal>شوف كل تفاصيل الكورس في دقيقتين</h2>
+    <div data-reveal style="--stagger-i: 1">
+      <WistiaEmbed mediaId="yb3il14voo" label="فيديو تعريفي عن دورة كلوديا" />
+    </div>
   </div>
 </section>
 
