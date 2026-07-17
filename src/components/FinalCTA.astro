@@ -1,6 +1,5 @@
 ---
-import PriceTag from './PriceTag.astro';
-import CTAButton from './CTAButton.astro';
+import PricingCard from './PricingCard.astro';
 
 interface Props {
   checkoutUrl: string;
@@ -14,9 +13,8 @@ const { checkoutUrl } = Astro.props;
     <p class="final-sub" data-reveal style="--stagger-i: 1">
       ٩٠ دقيقة بس تفصلك عن مديرة تسويق تشتغل عنك ٢٤ ساعة كل يوم.
     </p>
-    <div class="cta-row" data-reveal style="--stagger-i: 2">
-      <PriceTag />
-      <CTAButton href={checkoutUrl} size="lg" />
+    <div data-reveal style="--stagger-i: 2">
+      <PricingCard checkoutUrl={checkoutUrl} />
     </div>
   </div>
 </section>
@@ -45,11 +43,5 @@ const { checkoutUrl } = Astro.props;
     color: var(--text-muted);
     font-size: var(--fs-lead);
     margin-block-end: var(--space-xl);
-  }
-  .cta-row {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-md);
   }
 </style>

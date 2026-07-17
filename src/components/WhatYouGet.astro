@@ -1,7 +1,6 @@
 ---
 import ResponsivePicture from './ResponsivePicture.astro';
-import PriceTag from './PriceTag.astro';
-import CTAButton from './CTAButton.astro';
+import PricingCard from './PricingCard.astro';
 
 interface Props {
   checkoutUrl: string;
@@ -32,8 +31,7 @@ const items = [
         ))}
       </ul>
       <div data-reveal style="--stagger-i: 7">
-        <PriceTag align="start" />
-        <CTAButton href={checkoutUrl} size="lg" />
+        <PricingCard checkoutUrl={checkoutUrl} />
       </div>
     </div>
     <div class="image-col" data-reveal style="--stagger-i: 3">
@@ -61,9 +59,6 @@ const items = [
       grid-template-columns: 1.2fr 0.8fr;
       gap: var(--space-xl);
     }
-  }
-  .what-you-get :global(.price-tag) {
-    margin-block-end: var(--space-md);
   }
   .image-col {
     display: flex;

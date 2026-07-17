@@ -65,3 +65,14 @@
   --duration-slow: 700ms;
   --stagger-step: 70ms;
 }
+
+/* Compact section rhythm on small screens — sections don't need as much
+   breathing room on mobile as they do on a wide desktop viewport. */
+@media (max-width: 640px) {
+  :root {
+    --space-lg: 1.5rem;
+    --space-xl: 1.75rem;
+    --space-2xl: 2.25rem;
+    --space-3xl: 2.75rem;
+  }
+}

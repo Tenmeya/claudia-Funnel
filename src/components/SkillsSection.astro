@@ -1,6 +1,5 @@
 ---
-import PriceTag from './PriceTag.astro';
-import CTAButton from './CTAButton.astro';
+import PricingCard from './PricingCard.astro';
 
 interface Props {
   checkoutUrl: string;
@@ -56,9 +55,8 @@ const items = [
         </li>
       ))}
     </ul>
-    <div class="cta-row" data-reveal style="--stagger-i: 7">
-      <PriceTag />
-      <CTAButton href={checkoutUrl} size="lg" />
+    <div data-reveal style="--stagger-i: 7">
+      <PricingCard checkoutUrl={checkoutUrl} />
     </div>
   </div>
 </section>

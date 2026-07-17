@@ -1,7 +1,6 @@
 ---
 import ResponsivePicture from './ResponsivePicture.astro';
-import PriceTag from './PriceTag.astro';
-import CTAButton from './CTAButton.astro';
+import PricingCard from './PricingCard.astro';
 import Countdown from './Countdown.astro';
 
 interface Props {
@@ -28,12 +27,11 @@ const { checkoutUrl } = Astro.props;
         <li><strong>مقدّم الدورة:</strong> عيد المجيبل</li>
       </ul>
       <div class="hero-offer" data-reveal style="--stagger-i: 4">
-        <PriceTag align="start" />
         <div class="hero-countdown">
           <span class="countdown-intro">ينتهي العرض خلال:</span>
           <Countdown durationHours={48} align="start" />
         </div>
-        <CTAButton href={checkoutUrl} size="lg" class="hero-cta" />
+        <PricingCard checkoutUrl={checkoutUrl} />
       </div>
     </div>
     <div class="hero-media" data-reveal style="--stagger-i: 2">
@@ -145,11 +143,8 @@ const { checkoutUrl } = Astro.props;
     flex-direction: column;
     align-items: flex-start;
   }
-  .hero :global(.price-tag) {
-    margin-block-end: var(--space-md);
-  }
   .hero-countdown {
-    margin-block-end: var(--space-lg);
+    margin-block-end: var(--space-md);
   }
   .countdown-intro {
     display: block;
