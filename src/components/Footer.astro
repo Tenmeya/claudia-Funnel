@@ -1,4 +1,6 @@
 ---
+import ResponsivePicture from './ResponsivePicture.astro';
+
 interface Props {
   checkoutUrl: string;
 }
@@ -8,11 +10,19 @@ const year = new Date().getFullYear();
 
 <footer class="site-footer">
   <div class="container">
+    <ResponsivePicture
+      name="tenmeya-logo"
+      widths={[120, 240]}
+      alt="تنمية"
+      sizes="48px"
+      aspectRatio={1}
+      class="footer-logo"
+    />
     <p>دورة كلوديا — عيد المجيبل</p>
     <nav>
       <a href={checkoutUrl} target="_blank" rel="noopener">التسجيل في الدورة</a>
     </nav>
-    <p class="copyright">جميع الحقوق محفوظة</p>
+    <p class="copyright">جميع الحقوق محفوظة © {year}</p>
   </div>
 </footer>
 
@@ -24,6 +34,11 @@ const year = new Date().getFullYear();
     text-align: center;
     color: var(--text-muted);
     font-size: 0.9rem;
+  }
+  .site-footer :global(.footer-logo) {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto var(--space-sm);
   }
   .site-footer nav {
     margin-block: var(--space-sm);
