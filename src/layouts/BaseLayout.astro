@@ -5,13 +5,14 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description: string;
+  theme?: 'dark' | 'light';
 }
 
-const { title, description } = Astro.props;
+const { title, description, theme = 'dark' } = Astro.props;
 ---
 
 <!doctype html>
-<html dir="rtl" lang="ar">
+<html dir="rtl" lang="ar" data-theme={theme}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />

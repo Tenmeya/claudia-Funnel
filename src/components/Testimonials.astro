@@ -1,5 +1,13 @@
 ---
-const testimonials = [
+interface Props {
+  // Name of a testimonial already featured elsewhere on the page (e.g. the
+  // proof strip), so the grid doesn't repeat the same quote twice.
+  excludeName?: string;
+}
+
+const { excludeName } = Astro.props;
+
+const allTestimonials = [
   {
     name: 'فاطمه المرهون',
     quote: 'الدورة ممتازة وسهلة حتى للي ما عنده أي خلفية تقنية.',
@@ -19,6 +27,10 @@ const testimonials = [
       'الدورة أعطتني طريقة جديدة بالكامل للتعامل مع الحملات الإعلانية. الحين أستخدم Claude يومياً في شغلي.',
   },
 ];
+
+const testimonials = excludeName
+  ? allTestimonials.filter((t) => t.name !== excludeName)
+  : allTestimonials;
 ---
 
 <section class="section section-alt testimonials">

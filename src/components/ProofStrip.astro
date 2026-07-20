@@ -1,5 +1,14 @@
 ---
 // Highest-attention slot right under the hero — one strong testimonial.
+interface Props {
+  quote?: string;
+  name?: string;
+}
+
+const {
+  quote = 'الدورة أعطتني طريقة جديدة بالكامل للتعامل مع الحملات الإعلانية. الحين أستخدم Claude يومياً في شغلي.',
+  name = 'محمد الشقري',
+} = Astro.props;
 ---
 
 <section class="section section--tight proof-strip">
@@ -12,18 +21,15 @@
         />
         <defs>
           <linearGradient id="proofGradient" x1="0" y1="0" x2="32" y2="24" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#00D38D" />
-            <stop offset="1" stop-color="#00B8FB" />
+            <stop style="stop-color: var(--teal)" />
+            <stop offset="1" style="stop-color: var(--blue)" />
           </linearGradient>
         </defs>
       </svg>
-      <p>
-        الدورة أعطتني طريقة جديدة بالكامل للتعامل مع الحملات الإعلانية. الحين
-        أستخدم Claude يومياً في شغلي.
-      </p>
+      <p>{quote}</p>
       <footer>
-        <span class="avatar-chip" aria-hidden="true">م</span>
-        <span>محمد الشقري</span>
+        <span class="avatar-chip" aria-hidden="true">{name[0]}</span>
+        <span>{name}</span>
       </footer>
     </blockquote>
   </div>

@@ -5,27 +5,49 @@ import Countdown from './Countdown.astro';
 
 interface Props {
   checkoutUrl: string;
+  badgeText?: string;
+  headlinePrefix?: string;
+  headlineHighlight?: string;
+  subheadline?: string;
+  metaItems?: { label: string; value: string }[];
+  claudeProNote?: string;
 }
 
-const { checkoutUrl } = Astro.props;
+const {
+  checkoutUrl,
+  badgeText = 'دورة كلوديا',
+  headlinePrefix = 'خل كلود يدير',
+  headlineHighlight = 'كل حملاتك الإعلانية',
+  subheadline = 'تعلّم في بس ٩٠ دقيقة شلون تبني "كلوديا" مديرة تسويق تحلّل حملاتك، تكتب إعلاناتك، وتشتغل عنك ٢٤ ساعة كل يوم لزيادة مبيعاتك.',
+  metaItems = [
+    { label: 'المدة:', value: '٩٠ دقيقة' },
+    { label: 'الدروس:', value: '١٥ درس' },
+    { label: 'مقدّم الدورة:', value: 'عيد المجيبل' },
+  ],
+  claudeProNote,
+} = Astro.props;
 ---
 
 <section class="hero" data-hero>
   <div class="container hero-grid">
     <div class="hero-copy">
-      <span class="badge" data-reveal>دورة كلوديا</span>
+      <span class="badge" data-reveal>{badgeText}</span>
       <h1 class="hero-headline" data-reveal style="--stagger-i: 1">
-        خل كلود يدير <span class="gradient-text">كل حملاتك الإعلانية</span>
+        {headlinePrefix} <span class="gradient-text">{headlineHighlight}</span>
       </h1>
       <p class="hero-sub" data-reveal style="--stagger-i: 2">
-        تعلّم في بس ٩٠ دقيقة شلون تبني "كلوديا" مديرة تسويق تحلّل حملاتك، تكتب
-        إعلاناتك، وتشتغل عنك ٢٤ ساعة كل يوم لزيادة مبيعاتك.
+        {subheadline}
       </p>
       <ul class="hero-meta" data-reveal style="--stagger-i: 3">
-        <li><strong>المدة:</strong> ٩٠ دقيقة</li>
-        <li><strong>الدروس:</strong> ١٥ درس</li>
-        <li><strong>مقدّم الدورة:</strong> عيد المجيبل</li>
+        {metaItems.map((item) => (
+          <li><strong>{item.label}</strong> {item.value}</li>
+        ))}
       </ul>
+      {claudeProNote && (
+        <p class="hero-note" data-reveal style="--stagger-i: 3">
+          {claudeProNote}
+        </p>
+      )}
       <div class="hero-offer" data-reveal style="--stagger-i: 4">
         <div class="hero-countdown">
           <span class="countdown-intro">ينتهي العرض خلال:</span>
@@ -137,6 +159,18 @@ const { checkoutUrl } = Astro.props;
   .hero-meta strong {
     color: var(--text-primary);
     font-weight: 700;
+  }
+  .hero-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.75rem;
+    margin: 0 0 var(--space-lg);
+    border-radius: var(--radius-pill);
+    background: var(--card-bg);
+    border: 1px solid var(--border-subtle);
+    font-size: 0.8rem;
+    color: var(--text-muted);
   }
   .hero-offer {
     display: flex;

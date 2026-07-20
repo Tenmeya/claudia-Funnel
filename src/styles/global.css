@@ -71,7 +71,7 @@ html {
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--accent-text);
   outline-offset: 3px;
   border-radius: var(--radius-sm);
 }
@@ -141,7 +141,7 @@ a {
   font-size: var(--fs-small);
   font-weight: 700;
   letter-spacing: var(--tracking-wide);
-  color: var(--accent);
+  color: var(--accent-text);
   margin-block-end: var(--space-sm);
 }
 .kicker::before {
@@ -218,7 +218,7 @@ a {
   margin-block-start: 0.05rem;
   border-radius: 50%;
   background: rgba(0, 211, 141, 0.12);
-  color: var(--accent);
+  color: var(--accent-text);
   font-size: 0.75rem;
   font-weight: 800;
 }

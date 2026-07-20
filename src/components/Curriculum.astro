@@ -1,6 +1,11 @@
 ---
 import ResponsivePicture from './ResponsivePicture.astro';
 
+interface Props {
+  intro?: string;
+}
+const { intro } = Astro.props;
+
 const lessons = [
   'دور كلوديا في مشروعك.',
   'أساسيات منصة كلود من الصفر.',
@@ -23,6 +28,9 @@ const lessons = [
 <section class="section section-alt curriculum">
   <div class="container">
     <h2 class="section-title" data-reveal>ماذا ستتعلم؟</h2>
+    {intro && (
+      <p class="curriculum-intro" data-reveal>{intro}</p>
+    )}
     <ol class="lesson-list">
       {lessons.map((lesson, i) => (
         <li data-reveal style={`--stagger-i: ${Math.min(i, 6)}`}>
@@ -84,9 +92,15 @@ const lessons = [
     border-radius: 50%;
     background: var(--bg-dark-raised);
     border: 1px solid var(--border-hover);
-    color: var(--accent);
+    color: var(--accent-text);
     font-weight: 700;
     font-size: 0.85rem;
+  }
+  .curriculum-intro {
+    margin: 0 0 var(--space-md);
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    text-align: center;
   }
   .curriculum-note {
     margin-block-start: var(--space-md);

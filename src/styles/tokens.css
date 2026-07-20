@@ -7,6 +7,11 @@
   --blue: #00b8fb;
   --brand-gradient: linear-gradient(135deg, #00d38d, #00b8fb);
   --accent: var(--teal);
+  /* Accent used as literal text/icon color must stay AA (4.5:1) against the
+     page background — the raw --accent is tuned for use as a background/
+     gradient fill instead, and is too light for text once inverted to a
+     white page (see the [data-theme='light'] block below). */
+  --accent-text: var(--teal);
   --text-primary: #ffffff;
   --text-muted: rgba(255, 255, 255, 0.68);
   --text-faint: rgba(255, 255, 255, 0.46);
@@ -14,6 +19,9 @@
   --border-hover: rgba(255, 255, 255, 0.16);
   --card-bg: rgba(255, 255, 255, 0.035);
   --card-bg-hover: rgba(255, 255, 255, 0.06);
+  --surface-tint: rgba(255, 255, 255, 0.08);
+  --surface-highlight: rgba(255, 255, 255, 0.04);
+  --surface-overlay: rgba(11, 15, 26, 0.85);
 
   /* Shape */
   --radius-sm: 10px;
@@ -75,4 +83,38 @@
     --space-2xl: 2.25rem;
     --space-3xl: 2.75rem;
   }
+}
+
+/* Light theme (A/B variant) — same brand, different mood. Values verified
+   against WCAG AA (4.5:1 body text) with the actual rendered/blended colors,
+   not the raw swatch — light themes are where gradient-on-white and
+   light-gray-on-white combos usually fail contrast checks the dark theme
+   hides. --accent-text in particular is a deliberately darker teal than the
+   --accent/--teal used for backgrounds and the CTA gradient, because the
+   brand teal on its own only clears ~2.65:1 as literal text on white. */
+[data-theme='light'] {
+  --bg-dark: #ffffff;
+  --bg-dark-alt: #f5f7fa;
+  --bg-dark-raised: #eef1f6;
+  --teal: #00b583;
+  --blue: #0090c7;
+  --brand-gradient: linear-gradient(135deg, #00b583, #0090c7);
+  --accent: var(--teal);
+  --accent-text: #00805f;
+  --text-primary: #12151c;
+  --text-muted: rgba(18, 21, 28, 0.65);
+  --text-faint: rgba(18, 21, 28, 0.6);
+  --border-subtle: rgba(18, 21, 28, 0.08);
+  --border-hover: rgba(18, 21, 28, 0.16);
+  --card-bg: #ffffff;
+  --card-bg-hover: #f5f7fa;
+  --surface-tint: rgba(18, 21, 28, 0.06);
+  --surface-highlight: rgba(18, 21, 28, 0.03);
+  --surface-overlay: rgba(255, 255, 255, 0.85);
+
+  --shadow-xs: 0 1px 2px rgba(18, 21, 28, 0.06);
+  --shadow-sm: 0 8px 20px rgba(18, 21, 28, 0.06);
+  --shadow-md: 0 16px 40px rgba(18, 21, 28, 0.08);
+  --shadow-lg: 0 24px 60px rgba(18, 21, 28, 0.1);
+  --shadow-card: var(--shadow-md);
 }

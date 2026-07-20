@@ -3,21 +3,28 @@ import PricingCard from './PricingCard.astro';
 
 interface Props {
   checkoutUrl: string;
+  heading?: string;
+  items?: string[];
+  showPricing?: boolean;
 }
-const { checkoutUrl } = Astro.props;
 
-const items = [
-  'مبيعاتك متذبذبة ومو عارف السبب.',
-  'عندك حملات شغّالة بس شوي ضايع.',
-  'تبي نتائج مستقرة كل شهر في مشروع.',
-  'للحين مو عارف شلون تستخدم الAI في مشروعك.',
-  'تبي تستغل موجه الAI وما تبي يطوفك القطار.',
-];
+const {
+  checkoutUrl,
+  heading = 'الدورة تناسبك إذا:',
+  items = [
+    'مبيعاتك متذبذبة ومو عارف السبب.',
+    'عندك حملات شغّالة بس شوي ضايع.',
+    'تبي نتائج مستقرة كل شهر في مشروع.',
+    'للحين مو عارف شلون تستخدم الAI في مشروعك.',
+    'تبي تستغل موجه الAI وما تبي يطوفك القطار.',
+  ],
+  showPricing = true,
+} = Astro.props;
 ---
 
 <section class="section section--tight who-is-it-for">
   <div class="container">
-    <h2 class="section-title" data-reveal>الدورة تناسبك إذا:</h2>
+    <h2 class="section-title" data-reveal>{heading}</h2>
     <ul class="qualifier-grid">
       {items.map((item, i) => (
         <li class="qualifier-item" data-reveal style={`--stagger-i: ${i + 1}`}>
@@ -26,9 +33,11 @@ const items = [
         </li>
       ))}
     </ul>
-    <div data-reveal style="--stagger-i: 6">
-      <PricingCard checkoutUrl={checkoutUrl} />
-    </div>
+    {showPricing && (
+      <div data-reveal style="--stagger-i: 6">
+        <PricingCard checkoutUrl={checkoutUrl} />
+      </div>
+    )}
   </div>
 </section>
 
