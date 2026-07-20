@@ -1,5 +1,4 @@
 ---
-import ResponsivePicture from './ResponsivePicture.astro';
 import PricingCard from './PricingCard.astro';
 
 interface Props {
@@ -17,57 +16,24 @@ const items = [
 ---
 
 <section class="section section-alt what-you-get">
-  <div class="container grid-layout">
-    <div class="text-col">
-      <h2 class="section-title" data-reveal style="text-align: start">
-        ماذا ستحصل في الدورة؟
-      </h2>
-      <ul class="check-list">
-        {items.map((item, i) => (
-          <li data-reveal style={`--stagger-i: ${i + 2}`}>
-            <span class="check-icon" aria-hidden="true">✓</span>
-            <span>{item}</span>
-          </li>
-        ))}
-      </ul>
-      <div data-reveal style="--stagger-i: 7">
-        <PricingCard checkoutUrl={checkoutUrl} />
-      </div>
-    </div>
-    <div class="image-col" data-reveal style="--stagger-i: 3">
-      <ResponsivePicture
-        name="bonus-gift"
-        widths={[400, 700, 1254]}
-        alt="ملفات وقوالب وأوامر جاهزة لبناء كلوديا"
-        sizes="(max-width: 780px) 50vw, 260px"
-        aspectRatio={1}
-        class="gift-img"
-      />
+  <div class="container">
+    <h2 class="section-title" data-reveal>ماذا ستحصل في الدورة؟</h2>
+    <ul class="check-list">
+      {items.map((item, i) => (
+        <li data-reveal style={`--stagger-i: ${i + 1}`}>
+          <span class="check-icon" aria-hidden="true">✓</span>
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+    <div data-reveal style="--stagger-i: 6">
+      <PricingCard checkoutUrl={checkoutUrl} />
     </div>
   </div>
 </section>
 
 <style>
-  .grid-layout {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-lg);
-    align-items: center;
-  }
-  @media (min-width: 780px) {
-    .grid-layout {
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: var(--space-xl);
-    }
-  }
-  .image-col {
-    display: flex;
-    justify-content: center;
-  }
-  .what-you-get :global(.gift-img) {
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
-    max-width: 240px;
-    width: 100%;
+  .what-you-get .container {
+    max-width: 640px;
   }
 </style>

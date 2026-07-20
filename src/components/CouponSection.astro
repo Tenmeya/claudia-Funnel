@@ -2,11 +2,10 @@
 import Countdown from './Countdown.astro';
 
 interface Props {
-  checkoutUrl: string;
   code?: string;
 }
 
-const { checkoutUrl, code = '2026' } = Astro.props;
+const { code = '2026' } = Astro.props;
 ---
 
 <section class="section section--tight coupon-section">
@@ -14,13 +13,7 @@ const { checkoutUrl, code = '2026' } = Astro.props;
     <div class="coupon-card" data-reveal>
       <p class="coupon-headline">عندك كود خصم خاص — لا تفوّته:</p>
       <p class="coupon-code">الكود: <span class="code-value">{code}</span></p>
-      <button
-        type="button"
-        class="coupon-cta"
-        data-coupon-copy
-        data-code={code}
-        data-checkout-url={checkoutUrl}
-      >
+      <button type="button" class="coupon-cta" data-coupon-copy data-code={code}>
         <span data-coupon-label>انسخ الكود واستخدمه الحين</span>
       </button>
       <Countdown durationHours={48} shape="circle" />
@@ -117,7 +110,6 @@ const { checkoutUrl, code = '2026' } = Astro.props;
     const label = button.querySelector('[data-coupon-label]');
     const originalLabel = label.textContent;
     const code = button.dataset.code;
-    const checkoutUrl = button.dataset.checkoutUrl;
 
     button.addEventListener('click', async () => {
       await copyCode(code);
@@ -125,10 +117,6 @@ const { checkoutUrl, code = '2026' } = Astro.props;
 
       label.textContent = 'تم نسخ الكود ✓';
       button.classList.add('is-copied');
-
-      setTimeout(() => {
-        window.open(checkoutUrl, '_blank', 'noopener');
-      }, 600);
 
       setTimeout(() => {
         label.textContent = originalLabel;

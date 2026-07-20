@@ -7,12 +7,12 @@ import WhoIsItFor from '../components/WhoIsItFor.astro';
 import VSLSection from '../components/VSLSection.astro';
 import ClaudiaStory from '../components/ClaudiaStory.astro';
 import Testimonials from '../components/Testimonials.astro';
+import CouponSection from '../components/CouponSection.astro';
 import SkillsSection from '../components/SkillsSection.astro';
 import Curriculum from '../components/Curriculum.astro';
 import InstructorBio from '../components/InstructorBio.astro';
 import FreeLesson from '../components/FreeLesson.astro';
 import FAQSection from '../components/FAQSection.astro';
-import CouponSection from '../components/CouponSection.astro';
 import FinalCTA from '../components/FinalCTA.astro';
 import Footer from '../components/Footer.astro';
 import StickyCTA from '../components/StickyCTA.astro';
@@ -32,12 +32,12 @@ const CHECKOUT_URL = 'https://eid.tenmeya.com/step/claude-course-checkout/';
     <VSLSection />
     <ClaudiaStory />
     <Testimonials />
+    <CouponSection />
     <SkillsSection checkoutUrl={CHECKOUT_URL} />
     <Curriculum />
     <InstructorBio />
     <FreeLesson />
     <FAQSection />
-    <CouponSection checkoutUrl={CHECKOUT_URL} />
     <FinalCTA checkoutUrl={CHECKOUT_URL} />
     <Footer checkoutUrl={CHECKOUT_URL} />
   </main>
