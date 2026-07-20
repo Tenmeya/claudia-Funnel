@@ -1,4 +1,6 @@
 ---
+import ResponsivePicture from './ResponsivePicture.astro';
+
 const lessons = [
   'دور كلوديا في مشروعك.',
   'أساسيات منصة كلود من الصفر.',
@@ -32,6 +34,16 @@ const lessons = [
     <p class="curriculum-note" data-reveal>
       * ملفات ومهارات وأوامر جاهزة لبناء كلوديا أسرع
     </p>
+    <div class="curriculum-bonus-img" data-reveal>
+      <ResponsivePicture
+        name="bonus-gift"
+        widths={[400, 700, 1254]}
+        alt="ملفات وقوالب وأوامر جاهزة لبناء كلوديا"
+        sizes="(max-width: 780px) 50vw, 240px"
+        aspectRatio={1}
+        class="bonus-img"
+      />
+    </div>
   </div>
 </section>
 
@@ -81,5 +93,16 @@ const lessons = [
     color: var(--text-muted);
     font-size: 0.9rem;
     text-align: center;
+  }
+  .curriculum-bonus-img {
+    display: flex;
+    justify-content: center;
+    margin-block-start: var(--space-md);
+  }
+  .curriculum :global(.bonus-img) {
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    max-width: 220px;
+    width: 100%;
   }
 </style>

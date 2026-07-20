@@ -7,6 +7,7 @@ interface Props {
   fixedDeadline?: string;
   storageKey?: string;
   align?: 'center' | 'start';
+  shape?: 'card' | 'circle';
 }
 
 const {
@@ -14,11 +15,12 @@ const {
   fixedDeadline,
   storageKey = 'claudia_offer_deadline',
   align = 'center',
+  shape = 'card',
 } = Astro.props;
 ---
 
 <div
-  class:list={['countdown', align]}
+  class:list={['countdown', align, shape]}
   data-countdown
   data-duration-hours={durationHours}
   data-fixed-deadline={fixedDeadline ?? ''}
@@ -68,6 +70,25 @@ const {
   .countdown-label {
     font-size: 0.7rem;
     color: var(--text-muted);
+  }
+
+  .countdown.circle {
+    gap: var(--space-md);
+  }
+  .countdown.circle .countdown-unit {
+    justify-content: center;
+    gap: 0.15rem;
+    width: 4.5rem;
+    height: 4.5rem;
+    min-width: 0;
+    padding: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: none;
+    box-shadow: none;
+  }
+  .countdown.circle .countdown-value {
+    font-size: 1.4rem;
   }
 </style>
 
