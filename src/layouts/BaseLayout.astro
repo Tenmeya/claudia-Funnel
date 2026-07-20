@@ -34,18 +34,34 @@ const { title, description } = Astro.props;
       crossorigin
     />
 
-    <!--
-      TODO: Meta Pixel + Microsoft Clarity — waiting on IDs from the client.
-      This sandbox cannot reach eid.tenmeya.com to read the IDs off the live
-      WordPress page, so they must be supplied directly. Paste in place below
-      once provided, keeping the same IDs so historical data stays comparable.
+    <!-- Meta Pixel Code -->
+    <script is:inline>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '772681711958831');
+      fbq('track', 'PageView');
+    </script>
+    <noscript>
+      <img
+        height="1"
+        width="1"
+        style="display:none"
+        src="https://www.facebook.com/tr?id=772681711958831&ev=PageView&noscript=1"
+      />
+    </noscript>
+    <!-- End Meta Pixel Code -->
 
-      <script>
-        !function(f,b,e,v,n,t,s){...}(window, document,'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', 'PIXEL_ID_HERE');
-        fbq('track', 'PageView');
-      </script>
+    <!--
+      TODO: Microsoft Clarity — still waiting on the project ID from the
+      client. This sandbox cannot reach eid.tenmeya.com to read it off the
+      live WordPress page, so it must be supplied directly. Paste in place
+      below once provided.
 
       <script type="text/javascript">
         (function(c,l,a,r,i,t,y){
