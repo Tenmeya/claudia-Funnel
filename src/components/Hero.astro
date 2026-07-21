@@ -43,31 +43,15 @@ const isMinimal = variant === 'minimal';
     <div class="hero-copy" class:list={[isMinimal && 'centered']}>
       {isMinimal ? (
         <div class="hero-logos" data-reveal>
-          <span class="hero-logo-chip">
-            <span class="hero-logo-icon" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M12 2c.6 2.8 1.2 4.4 2.4 5.6C15.6 8.8 17.2 9.4 20 10c-2.8.6-4.4 1.2-5.6 2.4C13.2 13.6 12.6 15.2 12 18c-.6-2.8-1.2-4.4-2.4-5.6C8.4 11.2 6.8 10.6 4 10c2.8-.6 4.4-1.2 5.6-2.4C10.8 6.4 11.4 4.8 12 2Z"
-                  fill="currentColor"
-                />
-              </svg>
-            </span>
-            <span>Claude</span>
-          </span>
-          <span class="hero-logos-divider" aria-hidden="true">×</span>
-          <span class="hero-logo-chip">
-            <span class="hero-logo-icon" aria-hidden="true">
-              <svg width="20" height="12" viewBox="0 0 32 18" fill="none">
-                <path
-                  d="M8 3C4.1 3 1 6.1 1 9s3.1 6 7 6c3.6 0 5.8-2.6 7-4.8C16.2 12.4 18.4 15 22 15c3.9 0 7-2.9 7-6s-3.1-6-7-6c-3.6 0-5.8 2.6-7 4.8C13.8 5.6 11.6 3 8 3Z"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </span>
-            <span>Meta</span>
-          </span>
+          <ResponsivePicture
+            name="hero-logos"
+            widths={[320, 480, 640]}
+            alt="Claude و Meta"
+            sizes="160px"
+            loading="eager"
+            aspectRatio={951 / 782}
+            class="hero-logos-img"
+          />
         </div>
       ) : (
         <span class="badge" data-reveal>{badgeText}</span>
@@ -275,30 +259,14 @@ const isMinimal = variant === 'minimal';
     justify-content: center;
   }
   .hero-logos {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.4rem 1rem;
-    border-radius: var(--radius-pill);
-    background: var(--card-bg);
-    border: 1px solid var(--border-subtle);
-    margin-block-end: var(--space-md);
+    display: flex;
+    justify-content: center;
+    margin-block-end: var(--space-sm);
   }
-  .hero-logo-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--text-muted);
-  }
-  .hero-logo-icon {
-    display: inline-flex;
-    color: var(--accent-text);
-  }
-  .hero-logos-divider {
-    color: var(--text-faint);
-    font-size: 0.75rem;
+  .hero :global(.hero-logos-img) {
+    width: 100%;
+    max-width: 130px;
+    height: auto;
   }
   .hero-meta.badges {
     gap: 0.6rem;
