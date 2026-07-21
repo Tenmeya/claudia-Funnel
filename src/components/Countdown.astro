@@ -6,26 +6,26 @@ interface Props {
   durationHours?: number;
   fixedDeadline?: string;
   storageKey?: string;
+  align?: 'center' | 'start';
+  shape?: 'card' | 'circle';
 }
 
 const {
   durationHours = 48,
   fixedDeadline,
   storageKey = 'claudia_offer_deadline',
+  align = 'center',
+  shape = 'card',
 } = Astro.props;
 ---
 
 <div
-  class="countdown"
+  class:list={['countdown', align, shape]}
   data-countdown
   data-duration-hours={durationHours}
   data-fixed-deadline={fixedDeadline ?? ''}
   data-storage-key={storageKey}
 >
-  <div class="countdown-unit">
-    <span class="countdown-value" data-unit="days">00</span>
-    <span class="countdown-label">يوم</span>
-  </div>
   <div class="countdown-unit">
     <span class="countdown-value" data-unit="hours">00</span>
     <span class="countdown-label">ساعة</span>
@@ -46,24 +46,49 @@ const {
     gap: var(--space-sm);
     justify-content: center;
   }
+  .countdown.start {
+    justify-content: flex-start;
+  }
   .countdown-unit {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 3.25rem;
-    padding: 0.6rem 0.4rem;
-    background: var(--card-bg);
+    min-width: 3.5rem;
+    padding: 0.65rem 0.4rem;
+    background: linear-gradient(180deg, var(--bg-dark-raised), var(--card-bg));
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-xs), inset 0 1px 0 var(--surface-highlight);
   }
   .countdown-value {
-    font-size: 1.25rem;
+    font-size: 1.3rem;
     font-weight: 700;
+    letter-spacing: var(--tracking-tight);
     font-variant-numeric: tabular-nums;
+    color: var(--text-primary);
   }
   .countdown-label {
     font-size: 0.7rem;
     color: var(--text-muted);
+  }
+
+  .countdown.circle {
+    gap: var(--space-md);
+  }
+  .countdown.circle .countdown-unit {
+    justify-content: center;
+    gap: 0.15rem;
+    width: 4.5rem;
+    height: 4.5rem;
+    min-width: 0;
+    padding: 0;
+    border-radius: 50%;
+    background: var(--surface-tint);
+    border: none;
+    box-shadow: none;
+  }
+  .countdown.circle .countdown-value {
+    font-size: 1.4rem;
   }
 </style>
 
@@ -100,7 +125,6 @@ const {
 
     const deadline = getDeadline();
     const els = {
-      days: root.querySelector('[data-unit="days"]'),
       hours: root.querySelector('[data-unit="hours"]'),
       minutes: root.querySelector('[data-unit="minutes"]'),
       seconds: root.querySelector('[data-unit="seconds"]'),
@@ -112,15 +136,13 @@ const {
       const remaining = deadline - Date.now();
       if (remaining <= 0) {
         root.dispatchEvent(new CustomEvent('countdown:expired'));
-        els.days.textContent = '00';
         els.hours.textContent = '00';
         els.minutes.textContent = '00';
         els.seconds.textContent = '00';
         return;
       }
       const totalSeconds = Math.floor(remaining / 1000);
-      els.days.textContent = pad(Math.floor(totalSeconds / 86400));
-      els.hours.textContent = pad(Math.floor((totalSeconds % 86400) / 3600));
+      els.hours.textContent = pad(Math.floor(totalSeconds / 3600));
       els.minutes.textContent = pad(Math.floor((totalSeconds % 3600) / 60));
       els.seconds.textContent = pad(totalSeconds % 60);
       requestAnimationFrame(scheduleNext);

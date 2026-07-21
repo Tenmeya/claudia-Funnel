@@ -1,0 +1,286 @@
+---
+interface Props {
+  // Name of a testimonial already featured elsewhere on the page (e.g. the
+  // proof strip), so the grid doesn't repeat the same quote twice.
+  excludeName?: string;
+  // Lets a page swap in its own set of quotes without forking the markup —
+  // left undefined, the grid falls back to the original curated list.
+  testimonials?: { name: string; quote: string; rating?: number }[];
+}
+
+const { excludeName, testimonials: testimonialsProp } = Astro.props;
+
+const defaultTestimonials = [
+  {
+    name: 'فاطمه المرهون',
+    quote: 'الدورة ممتازة وسهلة حتى للي ما عنده أي خلفية تقنية.',
+  },
+  {
+    name: 'عمار الحمادي',
+    quote:
+      'كنت أسمع عن Claude و MCP بكل مكان لكن ما كنت فاهم الفكرة، الحين كل شيء صار واضح.',
+  },
+  {
+    name: 'وجدي بن قمرة',
+    quote: 'شرح مرتب ومختصر ويوصل الفكرة بسرعة.',
+  },
+  {
+    name: 'محمد الشقري',
+    quote:
+      'الدورة أعطتني طريقة جديدة بالكامل للتعامل مع الحملات الإعلانية. الحين أستخدم Claude يومياً في شغلي.',
+  },
+];
+
+const baseTestimonials = testimonialsProp ?? defaultTestimonials;
+
+const testimonials = excludeName
+  ? baseTestimonials.filter((t) => t.name !== excludeName)
+  : baseTestimonials;
+---
+
+<section class="section section-alt testimonials">
+  <div class="container">
+    <h2 class="section-title" data-reveal>آراء المشتركين</h2>
+    <div class="testimonial-grid">
+      <figure class="testimonial-card audio-card card" data-reveal style="--stagger-i: 1">
+        <div class="audio-player" data-audio-player>
+          <audio preload="none" src="/audio/hussain-alsaffar-testimonial.mp3"></audio>
+          <button type="button" class="audio-toggle" data-audio-toggle aria-label="تشغيل الشهادة الصوتية">
+            <svg class="icon-play" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 2.5v11l9-5.5-9-5.5Z" fill="currentColor" />
+            </svg>
+            <svg class="icon-pause is-icon-hidden" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3.5 2.5h3v11h-3v-11Zm6 0h3v11h-3v-11Z" fill="currentColor" />
+            </svg>
+          </button>
+          <input type="range" class="audio-scrubber" data-audio-scrubber min="0" max="100" value="0" step="0.1" aria-label="الموضع في التسجيل الصوتي" />
+          <span class="audio-time" data-audio-time>٠:٠٠</span>
+        </div>
+        <figcaption>
+          <span class="avatar-chip" aria-hidden="true">ح</span>
+          <span class="figcaption-text">
+            <strong>حسين الصفّار</strong>
+            <small>مؤسس شركة Websight</small>
+          </span>
+        </figcaption>
+      </figure>
+      {testimonials.map((t, i) => (
+        <figure class="testimonial-card card" data-reveal style={`--stagger-i: ${i + 2}`}>
+          <blockquote>{t.quote}</blockquote>
+          <figcaption>
+            <span class="avatar-chip" aria-hidden="true">{t.name[0]}</span>
+            {t.rating ? (
+              <span class="figcaption-text">
+                <strong>{t.name}</strong>
+                <span class="rating-stars" aria-label={`تقييم ${t.rating} من ٥`}>
+                  {'⭐'.repeat(t.rating)}
+                </span>
+              </span>
+            ) : (
+              <span>{t.name}</span>
+            )}
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+  @media (min-width: 700px) {
+    .testimonial-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .testimonial-card {
+    margin: 0;
+    padding: var(--space-md);
+  }
+  .testimonial-card blockquote {
+    margin: 0 0 var(--space-sm);
+    color: var(--text-primary);
+    line-height: var(--lh-snug);
+  }
+  .testimonial-card figcaption {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .avatar-chip {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background: var(--brand-gradient);
+    color: #071018;
+    font-weight: 800;
+    font-size: 0.85rem;
+  }
+  .figcaption-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+  .figcaption-text strong {
+    color: var(--text-primary);
+  }
+  .figcaption-text small {
+    color: var(--text-faint);
+    font-weight: 500;
+    font-size: 0.8rem;
+  }
+  .rating-stars {
+    font-size: 0.7rem;
+    line-height: 1;
+    letter-spacing: 1px;
+  }
+
+  .audio-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-md);
+  }
+  @media (min-width: 700px) {
+    .audio-card {
+      grid-column: 1 / -1;
+    }
+    .audio-player {
+      max-width: 420px;
+      margin-inline: auto;
+    }
+  }
+  .audio-player {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .audio-toggle {
+    position: relative;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    border: none;
+    background: var(--brand-gradient);
+    color: #071018;
+    cursor: pointer;
+    transition: transform var(--duration-fast) var(--ease-standard);
+  }
+  .audio-toggle:hover {
+    transform: scale(1.06);
+  }
+  .audio-toggle .is-icon-hidden {
+    display: none;
+  }
+  .audio-scrubber {
+    flex: 1;
+    appearance: none;
+    height: 4px;
+    border-radius: var(--radius-pill);
+    background: var(--border-subtle);
+    cursor: pointer;
+  }
+  .audio-scrubber::-webkit-slider-thumb {
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0, 211, 141, 0.2);
+  }
+  .audio-scrubber::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border: none;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0, 211, 141, 0.2);
+  }
+  .audio-time {
+    flex-shrink: 0;
+    font-size: 0.8rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-faint);
+    min-width: 2.5em;
+  }
+</style>
+
+<script>
+  const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+  const toArabicNumerals = (str) =>
+    str.replace(/[0-9]/g, (d) => arabicDigits[Number(d)]);
+
+  function formatTime(seconds) {
+    if (!Number.isFinite(seconds)) return toArabicNumerals('0:00');
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60)
+      .toString()
+      .padStart(2, '0');
+    return toArabicNumerals(`${m}:${s}`);
+  }
+
+  document.querySelectorAll('[data-audio-player]').forEach((player) => {
+    const audio = player.querySelector('audio');
+    const toggle = player.querySelector('[data-audio-toggle]');
+    const scrubber = player.querySelector('[data-audio-scrubber]');
+    const timeEl = player.querySelector('[data-audio-time]');
+    const iconPlay = toggle.querySelector('.icon-play');
+    const iconPause = toggle.querySelector('.icon-pause');
+    let seeking = false;
+
+    toggle.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    });
+
+    audio.addEventListener('play', () => {
+      iconPlay.classList.add('is-icon-hidden');
+      iconPause.classList.remove('is-icon-hidden');
+    });
+    audio.addEventListener('pause', () => {
+      iconPlay.classList.remove('is-icon-hidden');
+      iconPause.classList.add('is-icon-hidden');
+    });
+    audio.addEventListener('loadedmetadata', () => {
+      timeEl.textContent = formatTime(audio.duration);
+    });
+    audio.addEventListener('timeupdate', () => {
+      if (seeking) return;
+      if (audio.duration) {
+        scrubber.value = String((audio.currentTime / audio.duration) * 100);
+      }
+      timeEl.textContent = formatTime(audio.duration - audio.currentTime);
+    });
+    audio.addEventListener('ended', () => {
+      scrubber.value = '0';
+    });
+
+    scrubber.addEventListener('input', () => {
+      seeking = true;
+      if (audio.duration) {
+        audio.currentTime = (Number(scrubber.value) / 100) * audio.duration;
+      }
+    });
+    scrubber.addEventListener('change', () => {
+      seeking = false;
+    });
+  });
+</script>

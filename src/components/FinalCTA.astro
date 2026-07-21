@@ -1,0 +1,53 @@
+---
+import PricingCard from './PricingCard.astro';
+
+interface Props {
+  checkoutUrl: string;
+  heading?: string;
+  subheading?: string;
+}
+const {
+  checkoutUrl,
+  heading = 'جاهز تبني كلوديا؟',
+  subheading = '٩٠ دقيقة بس تفصلك عن مديرة تسويق تشتغل عنك ٢٤ ساعة كل يوم.',
+} = Astro.props;
+---
+
+<section class="section section--roomy final-cta">
+  <div class="container">
+    <h2 class="section-title" data-reveal>{heading}</h2>
+    <p class="final-sub" data-reveal style="--stagger-i: 1">
+      {subheading}
+    </p>
+    <div data-reveal style="--stagger-i: 2">
+      <PricingCard checkoutUrl={checkoutUrl} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .final-cta {
+    position: relative;
+    overflow: clip;
+    background: radial-gradient(
+        circle at 50% 100%,
+        rgba(0, 211, 141, 0.18),
+        transparent 60%
+      ),
+      radial-gradient(circle at 15% 20%, rgba(0, 184, 251, 0.12), transparent 50%),
+      var(--bg-dark-alt);
+    border-block: 1px solid var(--border-subtle);
+  }
+  .final-cta .container {
+    max-width: 560px;
+    text-align: center;
+  }
+  .final-cta .section-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+  }
+  .final-sub {
+    color: var(--text-muted);
+    font-size: var(--fs-lead);
+    margin-block-end: var(--space-xl);
+  }
+</style>

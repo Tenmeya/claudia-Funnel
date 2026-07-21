@@ -1,0 +1,39 @@
+---
+import PricingCard from './PricingCard.astro';
+
+interface Props {
+  checkoutUrl: string;
+}
+const { checkoutUrl } = Astro.props;
+
+const items = [
+  '١٥ فيديو مسجّل وجاهز (دروس عملية).',
+  'ملفات خاصة فيها أسرار بناء كلوديا (أوامر ومهارات).',
+  'مجتمع خاص لكل المشتركين داخل التطبيق.',
+  'قسم للمناقشة والأسئلة ومشاركة نجاحاتك.',
+  'لقاءات حصرية أونلاين خاصة بالمشتركين على زووم.',
+];
+---
+
+<section class="section section-alt what-you-get">
+  <div class="container">
+    <h2 class="section-title" data-reveal>ماذا ستحصل في الدورة؟</h2>
+    <ul class="check-list">
+      {items.map((item, i) => (
+        <li data-reveal style={`--stagger-i: ${i + 1}`}>
+          <span class="check-icon" aria-hidden="true">✓</span>
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+    <div data-reveal style="--stagger-i: 6">
+      <PricingCard checkoutUrl={checkoutUrl} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .what-you-get .container {
+    max-width: 640px;
+  }
+</style>

@@ -21,11 +21,21 @@ const { checkoutUrl } = Astro.props;
     inset-inline: 0;
     bottom: 0;
     z-index: 40;
-    background: rgba(11, 15, 26, 0.92);
-    backdrop-filter: blur(8px);
-    border-top: 1px solid var(--border-subtle);
+    background: var(--surface-overlay);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 -1px 0 var(--border-hover), var(--shadow-lg);
     transform: translateY(100%);
-    transition: transform var(--duration-medium) var(--ease-standard);
+    transition: transform var(--duration-medium) var(--ease-premium);
+  }
+  .sticky-cta::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 1px;
+    background: var(--brand-gradient);
+    opacity: 0.5;
   }
   .sticky-cta.is-visible {
     transform: translateY(0);

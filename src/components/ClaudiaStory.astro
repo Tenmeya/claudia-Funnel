@@ -1,0 +1,75 @@
+---
+import ResponsivePicture from './ResponsivePicture.astro';
+---
+
+<section class="section claudia-story">
+  <div class="story-glow" aria-hidden="true"></div>
+  <div class="container">
+    <h2 class="section-title" data-reveal>منو كلوديا؟</h2>
+    <div class="story-img-wrap" data-reveal>
+      <ResponsivePicture
+        name="claudia-meta-connect"
+        widths={[400, 700, 1254]}
+        alt="كلوديا تربط كلود بحساب Meta Ads"
+        sizes="(max-width: 780px) 85vw, 460px"
+        aspectRatio={1}
+        class="story-img"
+      />
+    </div>
+    <p class="story-lead" data-reveal style="--stagger-i: 1">
+      سميتها كلوديا لأنها أكثر من مجرّد Chat.
+    </p>
+    <p data-reveal style="--stagger-i: 2">
+      كلوديا مديرة تسويق ذكية تبنيها داخل كلود - تفهم مشروعك، تحلل حملاتك
+      الإعلانية، وتخليك تشوف فرص ما كنت تشوفها في مشروعك وبالأخص إعلاناتك.
+    </p>
+    <p data-reveal style="--stagger-i: 3">
+      في ٩٠ دقيقة راح أعلمك خطوة بخطوة شلون تبني كلوديا من الصفر حتى لو ما
+      عندك أي خبرة تقنية او خبرة في الAI.
+    </p>
+  </div>
+</section>
+
+<style>
+  .claudia-story {
+    position: relative;
+    overflow: clip;
+  }
+  .story-glow {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    max-width: 480px;
+    aspect-ratio: 1;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(0, 184, 251, 0.1),
+      transparent 70%
+    );
+    filter: blur(40px);
+    pointer-events: none;
+  }
+  .claudia-story .container {
+    position: relative;
+    max-width: 640px;
+    text-align: center;
+  }
+  .story-img-wrap {
+    margin: 0 auto var(--space-md);
+    max-width: 380px;
+  }
+  .claudia-story :global(.story-img) {
+    border-radius: var(--radius-lg);
+  }
+  .story-lead {
+    font-size: var(--fs-lead);
+    font-weight: 700;
+    line-height: var(--lh-snug);
+  }
+  .claudia-story p {
+    color: var(--text-muted);
+    line-height: var(--lh-relaxed);
+  }
+</style>

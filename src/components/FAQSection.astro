@@ -1,0 +1,23 @@
+---
+import FAQAccordion from './FAQAccordion.astro';
+import { faqItems } from '../data/faq.js';
+
+interface Props {
+  items?: { question: string; answer: string }[];
+}
+
+const { items = faqItems } = Astro.props;
+---
+
+<section class="section faq-section">
+  <div class="container">
+    <h2 class="section-title" data-reveal>أسئلة شائعة</h2>
+    <FAQAccordion items={items} />
+  </div>
+</section>
+
+<style>
+  .faq-section .container {
+    max-width: 720px;
+  }
+</style>

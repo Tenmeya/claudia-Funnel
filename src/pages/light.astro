@@ -1,0 +1,88 @@
+---
+// A/B variant of index.astro — same course, price, curriculum, and checkout
+// link, testing three things at once against the dark version:
+//   1. Light theme (data-theme="light" on BaseLayout)
+//   2. Problem-first structure (open on the pain, delay the offer reveal)
+//   3. Cost/pain copy angle (wasted ad spend, save the "24/7 manager"
+//      framing for the Final CTA, matching how the dark version opens)
+// Reuses the exact same component library as index.astro — only copy props
+// and section order differ. See PR description / chat for the full
+// hypothesis writeup.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import WhoIsItFor from '../components/WhoIsItFor.astro';
+import ProofStrip from '../components/ProofStrip.astro';
+import ClaudiaStory from '../components/ClaudiaStory.astro';
+import WhatYouGet from '../components/WhatYouGet.astro';
+import VSLSection from '../components/VSLSection.astro';
+import SkillsSection from '../components/SkillsSection.astro';
+import Testimonials from '../components/Testimonials.astro';
+import Curriculum from '../components/Curriculum.astro';
+import InstructorBio from '../components/InstructorBio.astro';
+import FreeLesson from '../components/FreeLesson.astro';
+import CouponSection from '../components/CouponSection.astro';
+import FAQSection from '../components/FAQSection.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+import Footer from '../components/Footer.astro';
+import StickyCTA from '../components/StickyCTA.astro';
+
+const CHECKOUT_URL = 'https://eid.tenmeya.com/step/claude-course-checkout/';
+---
+
+<BaseLayout
+  theme="light"
+  title="دورة كلوديا — وقف هدر ميزانية إعلاناتك"
+  description="ما تعرف وين تروح فلوس إعلاناتك أو ليش مبيعاتك متذبذبة؟ في ٩٠ دقيقة، كلوديا تكشف لك أسباب الهدر وتوقفه."
+>
+  <main>
+    <Hero
+      checkoutUrl={CHECKOUT_URL}
+      headlinePrefix="متعبك تصرف على إعلانات"
+      headlineHighlight="ما تعرف ليش فاشلة؟"
+      subheadline={
+        'كل شهر تصرف على إعلانات وما تعرف وين راحت الفلوس ولا ليش النتائج ' +
+        'متذبذبة. في ٩٠ دقيقة، كلوديا تكشف لك أسباب الهدر وتوقفه قبل ما يكبر أكثر.'
+      }
+      claudeProNote="يتطلب اشتراك Claude Pro للاستفادة الكاملة من الدورة"
+    />
+    <WhoIsItFor
+      checkoutUrl={CHECKOUT_URL}
+      heading="علامات إنك تخسر فلوس بدون ما تدري:"
+      showPricing={false}
+    />
+    <ProofStrip
+      quote="كنت أسمع عن Claude و MCP بكل مكان لكن ما كنت فاهم الفكرة، الحين كل شيء صار واضح."
+      name="عمار الحمادي"
+    />
+    <ClaudiaStory />
+    <WhatYouGet checkoutUrl={CHECKOUT_URL} />
+    <VSLSection />
+    <SkillsSection checkoutUrl={CHECKOUT_URL} />
+    <Testimonials excludeName="عمار الحمادي" />
+    <Curriculum intro="بعض الدروس تتطلب اشتراك Claude Pro للتطبيق الكامل." />
+    <InstructorBio />
+    <FreeLesson />
+    <CouponSection />
+    <FAQSection />
+    <FinalCTA checkoutUrl={CHECKOUT_URL} />
+    <Footer checkoutUrl={CHECKOUT_URL} />
+  </main>
+
+  <StickyCTA checkoutUrl={CHECKOUT_URL}>
+    <span class="sticky-price">٩٩$ <s>١٤٩$</s></span>
+  </StickyCTA>
+</BaseLayout>
+
+<style>
+  .sticky-price {
+    font-weight: 700;
+    font-size: 1rem;
+    white-space: nowrap;
+  }
+  .sticky-price s {
+    color: var(--text-faint);
+    font-weight: 400;
+    font-size: 0.85rem;
+    margin-inline-start: 0.35rem;
+  }
+</style>

@@ -1,0 +1,127 @@
+---
+import Countdown from './Countdown.astro';
+
+interface Props {
+  code?: string;
+}
+
+const { code = '2026' } = Astro.props;
+---
+
+<section class="section section--tight coupon-section">
+  <div class="container">
+    <div class="coupon-card" data-reveal>
+      <p class="coupon-headline">عندك كود خصم خاص — لا تفوّته:</p>
+      <p class="coupon-code">الكود: <span class="code-value">{code}</span></p>
+      <button type="button" class="coupon-cta" data-coupon-copy data-code={code}>
+        <span data-coupon-label>انسخ الكود واستخدمه الحين</span>
+      </button>
+      <Countdown durationHours={48} shape="circle" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .coupon-section .container {
+    max-width: 620px;
+  }
+  .coupon-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-xl) var(--space-lg);
+    text-align: center;
+    background: var(--bg-dark-raised);
+    border: 1px solid var(--border-hover);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+  .coupon-headline {
+    margin: 0;
+    font-size: var(--fs-lead);
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .coupon-code {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text-primary);
+  }
+  .code-value {
+    color: var(--accent-text);
+  }
+  .coupon-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: var(--radius-pill);
+    background: var(--brand-gradient);
+    color: #071018;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(0, 184, 251, 0.22);
+    transition: transform var(--duration-medium) var(--ease-premium),
+      box-shadow var(--duration-medium) var(--ease-premium);
+  }
+  .coupon-cta:hover {
+    transform: translateY(-2px) scale(1.015);
+    box-shadow: 0 14px 32px rgba(0, 184, 251, 0.3);
+  }
+  .coupon-cta:active {
+    transform: translateY(0) scale(0.99);
+  }
+  .coupon-cta.is-copied {
+    background: var(--teal);
+  }
+</style>
+
+<script>
+  import { trackEvent } from '../scripts/analytics.js';
+
+  async function copyCode(code) {
+    try {
+      await navigator.clipboard.writeText(code);
+      return true;
+    } catch (_) {
+      // Clipboard API can be blocked/unavailable in some in-app WebViews.
+      try {
+        const textarea = document.createElement('textarea');
+        textarea.value = code;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        return true;
+      } catch (_) {
+        return false;
+      }
+    }
+  }
+
+  document.querySelectorAll('[data-coupon-copy]').forEach((button) => {
+    const label = button.querySelector('[data-coupon-label]');
+    const originalLabel = label.textContent;
+    const code = button.dataset.code;
+
+    button.addEventListener('click', async () => {
+      await copyCode(code);
+      trackEvent('Apply coupon', { code });
+
+      label.textContent = 'تم نسخ الكود ✓';
+      button.classList.add('is-copied');
+
+      setTimeout(() => {
+        label.textContent = originalLabel;
+        button.classList.remove('is-copied');
+      }, 2200);
+    });
+  });
+</script>

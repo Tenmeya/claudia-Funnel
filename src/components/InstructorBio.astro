@@ -1,0 +1,135 @@
+---
+import ResponsivePicture from './ResponsivePicture.astro';
+
+interface Props {
+  // Lets a page swap which image anchors the section (e.g. reusing the hero
+  // portrait here instead) without forking the component.
+  bigImage?: string;
+  bigImageWidths?: number[];
+  bigImageAlt?: string;
+  bigImageAspect?: number;
+  showBadgeOverlay?: boolean;
+}
+
+const {
+  bigImage = 'journey-collage',
+  bigImageWidths = [400, 700, 1080],
+  bigImageAlt = 'محطات من رحلة عيد المجيبل المهنية',
+  bigImageAspect = 1,
+  showBadgeOverlay = true,
+} = Astro.props;
+---
+
+<section class="section instructor-bio">
+  <div class="container bio-grid">
+    <div class="bio-media" data-reveal>
+      <div class="bio-glow" aria-hidden="true"></div>
+      <ResponsivePicture
+        name={bigImage}
+        widths={bigImageWidths}
+        alt={bigImageAlt}
+        sizes="(max-width: 780px) 90vw, 420px"
+        aspectRatio={bigImageAspect}
+        class="bio-collage"
+      />
+      {showBadgeOverlay && (
+        <ResponsivePicture
+          name="bio"
+          widths={[400, 700, 1080]}
+          alt="عيد المجيبل"
+          sizes="(max-width: 780px) 60vw, 320px"
+          aspectRatio={1}
+          class="bio-portrait"
+        />
+      )}
+    </div>
+    <div class="bio-copy">
+      <h2 class="section-title" style="text-align: start" data-reveal>مقدّم الدورة</h2>
+      <h3 class="bio-name" data-reveal style="--stagger-i: 1">عيد المجيبل</h3>
+      <p data-reveal style="--stagger-i: 2">
+        كنت أقضي ساعات أحلل الأرقام في حملاتي الإعلانية - والصراحة كان الموضوع
+        مزعج.
+      </p>
+      <p data-reveal style="--stagger-i: 3">
+        بس الAI غيّر كل شي … الحين عندي مديرة تسويق تشتغل ٢٤ ساعة أديرها من
+        التليفون.
+      </p>
+      <p data-reveal style="--stagger-i: 4">
+        قبل سنتين كنت أحتاج موظّف راتبه لا يقل عن ٥ آلاف دولار كمدير تسويق -
+        بس اليوم مع "كلوديا" كل شي تغيّر.
+      </p>
+      <p data-reveal style="--stagger-i: 5">
+        في ٩٠ دقيقة بعلمك شلون أخيراً تحل مشكلة التسويق في مشروعك وشلون
+        تستغل أكبر موجه في العالم … الAI.
+      </p>
+      <p class="bio-signoff" data-reveal style="--stagger-i: 6">متحمس نبدأ … نشوفك داخل.<br />عيد.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .instructor-bio {
+    overflow: clip;
+  }
+  .bio-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+  @media (min-width: 780px) {
+    .bio-grid {
+      grid-template-columns: 0.9fr 1.1fr;
+    }
+  }
+  .bio-media {
+    position: relative;
+  }
+  .bio-glow {
+    position: absolute;
+    inset: -8%;
+    background: radial-gradient(
+      ellipse at 30% 70%,
+      rgba(0, 211, 141, 0.16),
+      transparent 65%
+    );
+    filter: blur(30px);
+    z-index: 0;
+  }
+  .instructor-bio :global(.bio-collage) {
+    position: relative;
+    z-index: 1;
+    border-radius: var(--radius-lg);
+    width: 100%;
+    box-shadow: var(--shadow-lg);
+    transition: transform var(--duration-slow) var(--ease-premium);
+  }
+  .bio-media:hover :global(.bio-collage) {
+    transform: scale(1.015);
+  }
+  .instructor-bio :global(.bio-portrait) {
+    position: absolute;
+    z-index: 2;
+    inset-inline-start: -1.25rem;
+    bottom: -1.25rem;
+    width: 40%;
+    max-width: 160px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    border: 3px solid var(--bg-dark);
+  }
+  .bio-name {
+    font-size: var(--fs-h3);
+    font-weight: 700;
+    color: var(--accent-text);
+    margin: 0 0 var(--space-sm);
+  }
+  .bio-copy p {
+    color: var(--text-muted);
+    line-height: var(--lh-relaxed);
+  }
+  .bio-signoff {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+</style>
