@@ -3,15 +3,21 @@ import PricingCard from './PricingCard.astro';
 
 interface Props {
   checkoutUrl: string;
+  heading?: string;
+  subheading?: string;
 }
-const { checkoutUrl } = Astro.props;
+const {
+  checkoutUrl,
+  heading = 'جاهز تبني كلوديا؟',
+  subheading = '٩٠ دقيقة بس تفصلك عن مديرة تسويق تشتغل عنك ٢٤ ساعة كل يوم.',
+} = Astro.props;
 ---
 
 <section class="section section--roomy final-cta">
   <div class="container">
-    <h2 class="section-title" data-reveal>جاهز تبني كلوديا؟</h2>
+    <h2 class="section-title" data-reveal>{heading}</h2>
     <p class="final-sub" data-reveal style="--stagger-i: 1">
-      ٩٠ دقيقة بس تفصلك عن مديرة تسويق تشتغل عنك ٢٤ ساعة كل يوم.
+      {subheading}
     </p>
     <div data-reveal style="--stagger-i: 2">
       <PricingCard checkoutUrl={checkoutUrl} />

@@ -2,6 +2,7 @@
 import ResponsivePicture from './ResponsivePicture.astro';
 import PricingCard from './PricingCard.astro';
 import Countdown from './Countdown.astro';
+import CTAButton from './CTAButton.astro';
 
 interface Props {
   checkoutUrl: string;
@@ -11,6 +12,12 @@ interface Props {
   subheadline?: string;
   metaItems?: { label: string; value: string }[];
   claudeProNote?: string;
+  // 'full' (default) keeps the original hero: eyebrow badge, side portrait,
+  // and the countdown+price offer block — this is what the light variant
+  // still relies on via its defaults.
+  // 'minimal' trims the hero down to logos → headline → subheadline →
+  // badges → CTA only, per the approved content-hierarchy brief.
+  variant?: 'full' | 'minimal';
 }
 
 const {
@@ -25,20 +32,53 @@ const {
     { label: 'مقدّم الدورة:', value: 'عيد المجيبل' },
   ],
   claudeProNote,
+  variant = 'full',
 } = Astro.props;
+
+const isMinimal = variant === 'minimal';
 ---
 
 <section class="hero" data-hero>
-  <div class="container hero-grid">
-    <div class="hero-copy">
-      <span class="badge" data-reveal>{badgeText}</span>
+  <div class="container hero-grid" class:list={[isMinimal && 'no-media']}>
+    <div class="hero-copy" class:list={[isMinimal && 'centered']}>
+      {isMinimal ? (
+        <div class="hero-logos" data-reveal>
+          <span class="hero-logo-chip">
+            <span class="hero-logo-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 2c.6 2.8 1.2 4.4 2.4 5.6C15.6 8.8 17.2 9.4 20 10c-2.8.6-4.4 1.2-5.6 2.4C13.2 13.6 12.6 15.2 12 18c-.6-2.8-1.2-4.4-2.4-5.6C8.4 11.2 6.8 10.6 4 10c2.8-.6 4.4-1.2 5.6-2.4C10.8 6.4 11.4 4.8 12 2Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </span>
+            <span>Claude</span>
+          </span>
+          <span class="hero-logos-divider" aria-hidden="true">×</span>
+          <span class="hero-logo-chip">
+            <span class="hero-logo-icon" aria-hidden="true">
+              <svg width="20" height="12" viewBox="0 0 32 18" fill="none">
+                <path
+                  d="M8 3C4.1 3 1 6.1 1 9s3.1 6 7 6c3.6 0 5.8-2.6 7-4.8C16.2 12.4 18.4 15 22 15c3.9 0 7-2.9 7-6s-3.1-6-7-6c-3.6 0-5.8 2.6-7 4.8C13.8 5.6 11.6 3 8 3Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
+            <span>Meta</span>
+          </span>
+        </div>
+      ) : (
+        <span class="badge" data-reveal>{badgeText}</span>
+      )}
       <h1 class="hero-headline" data-reveal style="--stagger-i: 1">
         {headlinePrefix} <span class="gradient-text">{headlineHighlight}</span>
       </h1>
       <p class="hero-sub" data-reveal style="--stagger-i: 2">
         {subheadline}
       </p>
-      <ul class="hero-meta" data-reveal style="--stagger-i: 3">
+      <ul class="hero-meta" class:list={[isMinimal && 'badges']} data-reveal style="--stagger-i: 3">
         {metaItems.map((item) => (
           <li><strong>{item.label}</strong> {item.value}</li>
         ))}
@@ -48,27 +88,35 @@ const {
           {claudeProNote}
         </p>
       )}
-      <div class="hero-offer" data-reveal style="--stagger-i: 4">
-        <div class="hero-countdown">
-          <span class="countdown-intro">ينتهي العرض خلال:</span>
-          <Countdown durationHours={48} align="start" />
+      {isMinimal ? (
+        <div class="hero-cta-solo" data-reveal style="--stagger-i: 4">
+          <CTAButton href={checkoutUrl} size="lg" />
         </div>
-        <PricingCard checkoutUrl={checkoutUrl} />
+      ) : (
+        <div class="hero-offer" data-reveal style="--stagger-i: 4">
+          <div class="hero-countdown">
+            <span class="countdown-intro">ينتهي العرض خلال:</span>
+            <Countdown durationHours={48} align="start" />
+          </div>
+          <PricingCard checkoutUrl={checkoutUrl} />
+        </div>
+      )}
+    </div>
+    {!isMinimal && (
+      <div class="hero-media" data-reveal style="--stagger-i: 2">
+        <div class="hero-media-glow" aria-hidden="true"></div>
+        <ResponsivePicture
+          name="hero"
+          widths={[480, 700, 1050, 1406]}
+          alt="عيد المجيبل، مقدّم دورة كلوديا"
+          sizes="(max-width: 780px) 90vw, 480px"
+          loading="eager"
+          fetchpriority="high"
+          aspectRatio={1406 / 2000}
+          class="hero-img"
+        />
       </div>
-    </div>
-    <div class="hero-media" data-reveal style="--stagger-i: 2">
-      <div class="hero-media-glow" aria-hidden="true"></div>
-      <ResponsivePicture
-        name="hero"
-        widths={[480, 700, 1050, 1406]}
-        alt="عيد المجيبل، مقدّم دورة كلوديا"
-        sizes="(max-width: 780px) 90vw, 480px"
-        loading="eager"
-        fetchpriority="high"
-        aspectRatio={1406 / 2000}
-        class="hero-img"
-      />
-    </div>
+    )}
   </div>
 </section>
 
@@ -202,6 +250,76 @@ const {
     );
     filter: blur(30px);
     z-index: 0;
+  }
+  /* Minimal variant — logos-first hero with no side portrait or offer block */
+  .hero-grid.no-media {
+    max-width: 720px;
+    margin-inline: auto;
+  }
+  @media (min-width: 780px) {
+    .hero-grid.no-media {
+      grid-template-columns: 1fr;
+    }
+  }
+  .hero-copy.centered {
+    text-align: center;
+  }
+  .hero-copy.centered .hero-sub {
+    margin-inline: auto;
+  }
+  .hero-copy.centered .hero-meta.badges {
+    justify-content: center;
+  }
+  .hero-copy.centered .hero-cta-solo {
+    display: flex;
+    justify-content: center;
+  }
+  .hero-logos {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.4rem 1rem;
+    border-radius: var(--radius-pill);
+    background: var(--card-bg);
+    border: 1px solid var(--border-subtle);
+    margin-block-end: var(--space-md);
+  }
+  .hero-logo-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+  .hero-logo-icon {
+    display: inline-flex;
+    color: var(--accent-text);
+  }
+  .hero-logos-divider {
+    color: var(--text-faint);
+    font-size: 0.75rem;
+  }
+  .hero-meta.badges {
+    gap: 0.6rem;
+  }
+  .hero-meta.badges li {
+    padding: 0.45rem 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-pill);
+    transition: transform var(--duration-medium) var(--ease-premium),
+      border-color var(--duration-medium) var(--ease-premium);
+  }
+  .hero-meta.badges li::after {
+    display: none;
+  }
+  .hero-meta.badges li:hover {
+    transform: translateY(-2px);
+    border-color: var(--border-hover);
+  }
+  .hero-cta-solo {
+    margin-block-start: var(--space-xs);
   }
   .hero :global(.hero-img) {
     position: relative;

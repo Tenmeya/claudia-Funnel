@@ -8,7 +8,6 @@ import VSLSection from '../components/VSLSection.astro';
 import ClaudiaStory from '../components/ClaudiaStory.astro';
 import Testimonials from '../components/Testimonials.astro';
 import CouponSection from '../components/CouponSection.astro';
-import SkillsSection from '../components/SkillsSection.astro';
 import Curriculum from '../components/Curriculum.astro';
 import InstructorBio from '../components/InstructorBio.astro';
 import FreeLesson from '../components/FreeLesson.astro';
@@ -16,29 +15,74 @@ import FAQSection from '../components/FAQSection.astro';
 import FinalCTA from '../components/FinalCTA.astro';
 import Footer from '../components/Footer.astro';
 import StickyCTA from '../components/StickyCTA.astro';
+import { faqItems } from '../data/faq.js';
 
 const CHECKOUT_URL = 'https://eid.tenmeya.com/step/claude-course-checkout/';
+
+// Claude Pro is no longer surfaced anywhere on the main page (per the latest
+// content brief) — the light variant keeps the full FAQ untouched.
+const mainFaqItems = faqItems.filter(
+  (item) => !item.answer.includes('Claude Pro')
+);
+
+// Course-fit qualifier icons, index-aligned with the items passed to
+// WhoIsItFor below.
+const courseFitIcons = [
+  'M2.5 13.5 6 8l3 4 3-7 3.5 5',
+  'M9 2.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9Zm0 9c0 2-1.5 3-1.5 4.5a1.5 1.5 0 0 0 3 0c0-1.5-1.5-2.5-1.5-4.5Z',
+  'M3 14V9m4 5V6m4 8V4m4 10V7',
+  'M3 3h10v10H3V3Zm2 2h.01M11 5h.01M8 8h.01M5 11h.01M11 11h.01',
+  'M9 2.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Zm0 3V9l3 2',
+];
 ---
 
 <BaseLayout
-  title="دورة كلوديا — حوّل كلود إلى مديرة تسويق ذكية"
-  description="تعلّم في ٩٠ دقيقة شلون تبني كلوديا، مديرة تسويق ذكية داخل Claude تحلّل حملاتك وتكتب إعلاناتك وتشتغل عنك ٢٤ ساعة كل يوم."
+  title="دورة كلوديا — وقف نزيف ميزانية إعلاناتك مع كلود"
+  description="تعلّم في ٩٠ دقيقة شلون تبني أقوى موظفة تسويق داخل كلود تكشف أخطاء حملاتك وتوقّف هدر الميزانية حتى من غير خبرة في الـ AI."
 >
   <main>
-    <Hero checkoutUrl={CHECKOUT_URL} />
+    <Hero
+      checkoutUrl={CHECKOUT_URL}
+      variant="minimal"
+      headlinePrefix="وقف نزيف ميزانية إعلاناتك مع"
+      headlineHighlight="كلود"
+      subheadline="تعلّم في ٩٠ دقيقة شلون تبني أقوى موظفة تسويق داخل كلود تكشف أخطاء حملاتك وتوقّف هدر الميزانية حتى من غير خبرة في الـ AI."
+      metaItems={[
+        { label: 'المدة:', value: '٩٠ دقيقة' },
+        { label: 'الدروس:', value: '١٥ درس' },
+        { label: '⭐', value: '٤.٩' },
+        { label: 'عدد المشتركين:', value: '١٤٢٣ مشترك' },
+      ]}
+    />
     <ProofStrip />
-    <WhatYouGet checkoutUrl={CHECKOUT_URL} />
-    <WhoIsItFor checkoutUrl={CHECKOUT_URL} />
+    <WhoIsItFor
+      checkoutUrl={CHECKOUT_URL}
+      heading="هذا الكورس مناسب لك إذا:"
+      items={[
+        'تصرف على الإعلانات… والنتائج مو ثابتة.',
+        'مو عارف وين قاعد يروح جزء كبير من ميزانيتك.',
+        'تبي نتائج مستقرة كل شهر في مشروعك.',
+        'للحين تستخدم الذكاء الاصطناعي بطريقة عشوائية.',
+        'تحس الكل سابقك بالـ AI… وأنت للحين متردد.',
+      ]}
+      icons={courseFitIcons}
+    />
     <VSLSection />
+    <Testimonials excludeName="محمد الشقري" />
+    <WhatYouGet checkoutUrl={CHECKOUT_URL} />
     <ClaudiaStory />
-    <Testimonials />
-    <CouponSection />
-    <SkillsSection checkoutUrl={CHECKOUT_URL} />
     <Curriculum />
-    <InstructorBio />
+    <InstructorBio
+      bigImage="hero"
+      bigImageWidths={[480, 700, 1050, 1406]}
+      bigImageAlt="عيد المجيبل، مقدّم دورة كلوديا"
+      bigImageAspect={1406 / 2000}
+      showBadgeOverlay={false}
+    />
     <FreeLesson />
-    <FAQSection />
-    <FinalCTA checkoutUrl={CHECKOUT_URL} />
+    <CouponSection />
+    <FAQSection items={mainFaqItems} />
+    <FinalCTA checkoutUrl={CHECKOUT_URL} heading="جاهز أبدأ" />
     <Footer checkoutUrl={CHECKOUT_URL} />
   </main>
 

@@ -1,5 +1,23 @@
 ---
 import ResponsivePicture from './ResponsivePicture.astro';
+
+interface Props {
+  // Lets a page swap which image anchors the section (e.g. reusing the hero
+  // portrait here instead) without forking the component.
+  bigImage?: string;
+  bigImageWidths?: number[];
+  bigImageAlt?: string;
+  bigImageAspect?: number;
+  showBadgeOverlay?: boolean;
+}
+
+const {
+  bigImage = 'journey-collage',
+  bigImageWidths = [400, 700, 1080],
+  bigImageAlt = 'محطات من رحلة عيد المجيبل المهنية',
+  bigImageAspect = 1,
+  showBadgeOverlay = true,
+} = Astro.props;
 ---
 
 <section class="section instructor-bio">
@@ -7,21 +25,23 @@ import ResponsivePicture from './ResponsivePicture.astro';
     <div class="bio-media" data-reveal>
       <div class="bio-glow" aria-hidden="true"></div>
       <ResponsivePicture
-        name="journey-collage"
-        widths={[400, 700, 1080]}
-        alt="محطات من رحلة عيد المجيبل المهنية"
+        name={bigImage}
+        widths={bigImageWidths}
+        alt={bigImageAlt}
         sizes="(max-width: 780px) 90vw, 420px"
-        aspectRatio={1}
+        aspectRatio={bigImageAspect}
         class="bio-collage"
       />
-      <ResponsivePicture
-        name="bio"
-        widths={[400, 700, 1080]}
-        alt="عيد المجيبل"
-        sizes="(max-width: 780px) 60vw, 320px"
-        aspectRatio={1}
-        class="bio-portrait"
-      />
+      {showBadgeOverlay && (
+        <ResponsivePicture
+          name="bio"
+          widths={[400, 700, 1080]}
+          alt="عيد المجيبل"
+          sizes="(max-width: 780px) 60vw, 320px"
+          aspectRatio={1}
+          class="bio-portrait"
+        />
+      )}
     </div>
     <div class="bio-copy">
       <h2 class="section-title" style="text-align: start" data-reveal>مقدّم الدورة</h2>
