@@ -3,11 +3,14 @@ interface Props {
   // Name of a testimonial already featured elsewhere on the page (e.g. the
   // proof strip), so the grid doesn't repeat the same quote twice.
   excludeName?: string;
+  // Lets a page swap in its own set of quotes without forking the markup —
+  // left undefined, the grid falls back to the original curated list.
+  testimonials?: { name: string; quote: string; rating?: number }[];
 }
 
-const { excludeName } = Astro.props;
+const { excludeName, testimonials: testimonialsProp } = Astro.props;
 
-const allTestimonials = [
+const defaultTestimonials = [
   {
     name: 'فاطمه المرهون',
     quote: 'الدورة ممتازة وسهلة حتى للي ما عنده أي خلفية تقنية.',
@@ -28,9 +31,11 @@ const allTestimonials = [
   },
 ];
 
+const baseTestimonials = testimonialsProp ?? defaultTestimonials;
+
 const testimonials = excludeName
-  ? allTestimonials.filter((t) => t.name !== excludeName)
-  : allTestimonials;
+  ? baseTestimonials.filter((t) => t.name !== excludeName)
+  : baseTestimonials;
 ---
 
 <section class="section section-alt testimonials">
@@ -64,7 +69,16 @@ const testimonials = excludeName
           <blockquote>{t.quote}</blockquote>
           <figcaption>
             <span class="avatar-chip" aria-hidden="true">{t.name[0]}</span>
-            <span>{t.name}</span>
+            {t.rating ? (
+              <span class="figcaption-text">
+                <strong>{t.name}</strong>
+                <span class="rating-stars" aria-label={`تقييم ${t.rating} من ٥`}>
+                  {'⭐'.repeat(t.rating)}
+                </span>
+              </span>
+            ) : (
+              <span>{t.name}</span>
+            )}
           </figcaption>
         </figure>
       ))}
@@ -125,6 +139,11 @@ const testimonials = excludeName
     color: var(--text-faint);
     font-weight: 500;
     font-size: 0.8rem;
+  }
+  .rating-stars {
+    font-size: 0.7rem;
+    line-height: 1;
+    letter-spacing: 1px;
   }
 
   .audio-card {
